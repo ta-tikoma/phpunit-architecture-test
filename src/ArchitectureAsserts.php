@@ -6,6 +6,7 @@ namespace PHPUnit\Architecture;
 
 use PhpParser\{ParserFactory, Node, NodeFinder};
 use PHPUnit\Architecture\Elements\Layer;
+use PHPUnit\Architecture\Storage\ObjectsStorage;
 use ReflectionClass;
 
 /**
@@ -64,12 +65,14 @@ trait ArchitectureAsserts
         $result = [];
 
         foreach ($layers as $layer) {
-            foreach ($layer->objects as $object) {
-                foreach ($object->getUses() as $use) {
+            foreach ($layer->objectsName as $name) {
+                $object = ObjectsStorage::getObjectMap()[$name];
+                foreach ($object->uses as $use) {
                     foreach ($layersToSearch as $layerToSearch) {
-                        foreach ($layerToSearch->objects as $objectToSearch) {
-                            if ($objectToSearch->getName() === $use) {
-                                $result[] = $objectToSearch;
+                        foreach ($layerToSearch->objectsName as $nameToSearch) {
+                            $objectToSearch = ObjectsStorage::getObjectMap()[$nameToSearch];
+                            if ($objectToSearch->name === $use) {
+                                $result[] = $nameToSearch;
                             }
                         }
                     }

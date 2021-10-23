@@ -12,15 +12,19 @@ final class TestLayer extends TestCase
 {
     use ArchitectureAsserts;
 
-    public function test_make_layers_and_assert_depends()
+    public function test_make_layers_from_namespaces()
     {
-        // $app = LayerBuilder::fromNamespace('PHPUnit\\Architecture');
-        $app = LayerBuilder::fromNamespace('PHPUnit');
-        // $tests = LayerBuilder::fromNamespace('tests');
+        $app = LayerBuilder::fromNamespace('PHPUnit\\Architecture');
+        $tests = LayerBuilder::fromNamespace('tests');
 
-        // var_dump($app, $tests);
-        var_dump($app);
-        die();
+        $this->assertDoesNotDependOn($app, $tests);
+        $this->assertDependOn($tests, $app);
+    }
+
+    public function test_male_layers_from_directories()
+    {
+        $app = LayerBuilder::fromDirectory('src');
+        $tests = LayerBuilder::fromDirectory('tests');
 
         $this->assertDoesNotDependOn($app, $tests);
         $this->assertDependOn($tests, $app);

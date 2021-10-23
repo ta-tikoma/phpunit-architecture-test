@@ -6,6 +6,8 @@ namespace PHPUnit\Architecture\Builders;
 
 use Closure;
 use PHPUnit\Architecture\Elements\Layer;
+use PHPUnit\Architecture\Elements\ObjectDescription;
+use PHPUnit\Architecture\Storage\Filesystem;
 use PHPUnit\Architecture\Storage\ObjectsStorage;
 
 final class LayerBuilder
@@ -16,25 +18,32 @@ final class LayerBuilder
      */
     public static function fromDirectory($include, $exclude = []): Layer
     {
+        $include = is_array($include) ? $include : [$include];
+        $exclude = is_array($exclude) ? $exclude : [$exclude];
+
+        $name = md5(implode(',', $include) . implode(',', $exclude));
+
         $include = array_map(static function (string $line): array {
+            $line = realpath(Filesystem::getBaseDir() . $line);
             return [$line, strlen($line)];
-        }, is_array($include) ? $include : [$include]);
+        }, $include);
 
         $exclude = array_map(static function (string $line): array {
+            $line = realpath(Filesystem::getBaseDir() . $line);
             return [$line, strlen($line)];
-        }, is_array($exclude) ? $exclude : [$exclude]);
+        }, $exclude);
 
-        $objectNames = self::byClosure(static function (string $name, string $path) use ($include, $exclude): bool {
+        $objectNames = self::byClosure(static function (ObjectDescription $objectDescription) use ($include, $exclude): bool {
             foreach ($exclude as list($line, $length)) {
                 /** @var int $length */
-                if (substr($path, 0, $length) === $line) {
+                if (substr($objectDescription->path, 0, $length) === $line) {
                     return false;
                 }
             }
 
             foreach ($include as list($line, $length)) {
                 /** @var int $length */
-                if (substr($path, 0, $length) === $line) {
+                if (substr($objectDescription->path, 0, $length) === $line) {
                     return true;
                 }
             }
@@ -42,7 +51,7 @@ final class LayerBuilder
             return false;
         });
 
-        return new Layer((string) rand(), $objectNames);
+        return new Layer($name, $objectNames);
     }
 
     /**
@@ -51,25 +60,30 @@ final class LayerBuilder
      */
     public static function fromNamespace($include, $exclude = []): Layer
     {
+        $include = is_array($include) ? $include : [$include];
+        $exclude = is_array($exclude) ? $exclude : [$exclude];
+
+        $name = md5(implode(',', $include) . implode(',', $exclude));
+
         $include = array_map(static function (string $line): array {
             return [$line, strlen($line)];
-        }, is_array($include) ? $include : [$include]);
+        }, $include);
 
         $exclude = array_map(static function (string $line): array {
             return [$line, strlen($line)];
-        }, is_array($exclude) ? $exclude : [$exclude]);
+        }, $exclude);
 
-        $objectNames = self::byClosure(static function (string $name, string $path) use ($include, $exclude): bool {
+        $objectNames = self::byClosure(static function (ObjectDescription $objectDescription) use ($include, $exclude): bool {
             foreach ($exclude as list($line, $length)) {
                 /** @var int $length */
-                if (substr($name, 0, $length) === $line) {
+                if (substr($objectDescription->name, 0, $length) === $line) {
                     return false;
                 }
             }
 
             foreach ($include as list($line, $length)) {
                 /** @var int $length */
-                if (substr($name, 0, $length) === $line) {
+                if (substr($objectDescription->name, 0, $length) === $line) {
                     return true;
                 }
             }
@@ -77,7 +91,7 @@ final class LayerBuilder
             return false;
         });
 
-        return new Layer((string) rand(), $objectNames);
+        return new Layer($name, $objectNames);
     }
 
     /**
@@ -87,9 +101,9 @@ final class LayerBuilder
     {
         $objectNames = [];
 
-        foreach (ObjectsStorage::getObjectMap() as $name => $path) {
-            if ($closure($name, $path)) {
-                $objectNames[] = $name;
+        foreach (ObjectsStorage::getObjectMap() as $objectDescription) {
+            if ($closure($objectDescription)) {
+                $objectNames[] = $objectDescription->name;
             }
         }
 
