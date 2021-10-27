@@ -6,6 +6,8 @@ namespace PHPUnit\Architecture\Builders;
 
 use Closure;
 use PHPUnit\Architecture\Elements\Layer;
+use PHPUnit\Architecture\Elements\ObjectDescription;
+use PHPUnit\Architecture\Storage\ObjectsStorage;
 
 final class LayersBuilder
 {
@@ -14,12 +16,9 @@ final class LayersBuilder
      */
     public static function fromNamespaceRegex(string $namespaceRegex): array
     {
-        $objects = self::byClosure(static function (string $objectName) use ($namespaceRegex): ?string {
-            // var_dump($objectName);
-            preg_match_all($namespaceRegex, $objectName, $matches, PREG_SET_ORDER, 0);
+        $objects = self::byClosure(static function (ObjectDescription $objectDescription) use ($namespaceRegex): ?string {
+            preg_match_all($namespaceRegex, $objectDescription->name, $matches, PREG_SET_ORDER, 0);
 
-            var_dump($objectName);
-            var_dump($matches);
             if (isset($matches[0]['name'])) {
                 return $matches[0]['name'];
             }
@@ -37,38 +36,18 @@ final class LayersBuilder
 
     private static function byClosure(Closure $closure): array
     {
-        $objects = [];
+        $objectNames = [];
 
-        foreach (get_declared_classes() as $className) {
-            if (!is_null($name = $closure($className))) {
-                if (!isset($objects[$name])) {
-                    $objects[$name] = [];
+        foreach (ObjectsStorage::getObjectMap() as $objectDescription) {
+            if ($name = $closure($objectDescription)) {
+                if (!isset($objectNames[$name])) {
+                    $objectNames[$name] = [];
                 }
 
-                $objects[$name][] = $className;
+                $objectNames[$name][] = $objectDescription->name;
             }
         }
 
-        foreach (get_declared_traits() as $traitName) {
-            if (!is_null($name = $closure($traitName))) {
-                if (!isset($objects[$name])) {
-                    $objects[$name] = [];
-                }
-
-                $objects[$name][] = $traitName;
-            }
-        }
-
-        foreach (get_declared_interfaces() as $interfaceName) {
-            if (!is_null($name = $closure($interfaceName))) {
-                if (!isset($objects[$name])) {
-                    $objects[$name] = [];
-                }
-
-                $objects[$name][] = $interfaceName;
-            }
-        }
-
-        return $objects;
+        return $objectNames;
     }
 }

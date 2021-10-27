@@ -29,12 +29,17 @@ abstract class TestCase extends BaseTestCase
     public function test_make_layer_from_namespace()
     {
         $app = LayerBuilder::fromNamespace('PHPUnit\\Architecture');
-        $tests = LayerBuilder::fromNamespace('tests\\');
+        $tests = LayerBuilder::fromNamespace('tests');
 
         $this->assertDoesNotDependOn($app, $tests);
         $this->assertDependOn($tests, $app);
     }
 
+```
+
+## Run
+```bash
+./vendor/bin/phpunit
 ```
 
 ## Alternatives

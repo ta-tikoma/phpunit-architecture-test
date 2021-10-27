@@ -4,14 +4,10 @@ declare(strict_types=1);
 
 namespace tests;
 
-use PHPUnit\Architecture\ArchitectureAsserts;
 use PHPUnit\Architecture\Builders\LayerBuilder;
-use PHPUnit\Framework\TestCase;
 
-final class TestLayer extends TestCase
+final class LayerTest extends TestCase
 {
-    use ArchitectureAsserts;
-
     public function test_make_layers_from_namespaces()
     {
         $app = LayerBuilder::fromNamespace('PHPUnit\\Architecture');
