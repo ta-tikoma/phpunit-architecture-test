@@ -17,10 +17,19 @@ final class LayerTest extends TestCase
         $this->assertDependOn($tests, $app);
     }
 
-    public function test_male_layers_from_directories()
+    public function test_make_layers_from_directories()
     {
         $app = LayerBuilder::fromDirectory('src');
         $tests = LayerBuilder::fromDirectory('tests');
+
+        $this->assertDoesNotDependOn($app, $tests);
+        $this->assertDependOn($tests, $app);
+    }
+
+    public function test_make_layers_from_filter()
+    {
+        $app = (new LayerBuilder)->includePath('src')->build();
+        $tests = (new LayerBuilder)->includePath('tests')->build();
 
         $this->assertDoesNotDependOn($app, $tests);
         $this->assertDependOn($tests, $app);
