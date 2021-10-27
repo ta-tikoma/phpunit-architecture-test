@@ -43,5 +43,9 @@ abstract class TestCase extends BaseTestCase
 ```
 
 ## Alternatives
-[Deptrac](https://github.com/qossmic/deptrac)
-[PHP Architecture Tester](https://github.com/carlosas/phpat)
+- [Deptrac](https://github.com/qossmic/deptrac)
+- [PHP Architecture Tester](https://github.com/carlosas/phpat)
+
+### Advantages
+- Dynamic creation of layers by regular expression
+- Run along with the rest of tests from [phpunit](https://github.com/sebastianbergmann/phpunit)
