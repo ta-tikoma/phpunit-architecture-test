@@ -30,7 +30,7 @@ final class NamespaceStartFilter implements FilterContract
     {
         foreach ($this->starts as list($line, $length)) {
             /** @var int $length */
-            if (substr($objectDescription->path, 0, $length) === $line) {
+            if (substr($objectDescription->name, 0, $length) === $line) {
                 return true;
             }
         }
