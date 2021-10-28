@@ -4,32 +4,17 @@ declare(strict_types=1);
 
 namespace PHPUnit\Architecture\Storage;
 
+use PHPUnit\Architecture\Asserts\Dependencies\ObjectDependenciesDescription;
 use PHPUnit\Architecture\Elements\ObjectDescription;
-use SplFileInfo;
-use Symfony\Component\Finder\Finder;
 
 final class ObjectsStorage
 {
+    public static string $descriptionClass = ObjectDependenciesDescription::class;
+
     /**
      * @var ObjectDescription[]
      */
     private static $objectMap;
-
-    private static function allFiles()
-    {
-        /** @var SplFileInfo[] $paths */
-        $paths = Finder::create()
-            ->files()
-            ->followLinks()
-            ->name('/\.php$/')
-            ->in(Filesystem::getBaseDir());
-
-        foreach ($paths as $path) {
-            if ($path->isFile()) {
-                yield $path->getRealPath();
-            }
-        }
-    }
 
     private static function init(): void
     {
@@ -39,8 +24,8 @@ final class ObjectsStorage
 
         self::$objectMap = [];
 
-        foreach (self::allFiles() as $path) {
-            $description = ObjectDescription::make($path);
+        foreach (Filesystem::files() as $path) {
+            $description = self::$descriptionClass::make($path);
             if ($description === null) {
                 continue;
             }

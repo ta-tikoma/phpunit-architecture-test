@@ -20,12 +20,7 @@ class ObjectDescription
 
     public string $name;
 
-    /**
-     * Names of uses objects
-     *
-     * @var string[]
-     */
-    public array $uses;
+    public array $stmts;
 
     protected static ?Parser $parser = null;
 
@@ -75,16 +70,10 @@ class ObjectDescription
 
         $name = $object->namespacedName->toCodeString();
 
-        /** @var Node\Stmt\UseUse[] $useUses */
-        $useUses = self::$nodeFinder->findInstanceOf($stmts, Node\Stmt\UseUse::class);
-        $uses = array_map(static function (Node\Stmt\UseUse $useUse): string {
-            return $useUse->name->toCodeString();
-        }, $useUses);
-
         $description = new static();
         $description->path = $path;
         $description->name = $name;
-        $description->uses = $uses;
+        $description->stmts = $stmts;
 
         return $description;
     }
