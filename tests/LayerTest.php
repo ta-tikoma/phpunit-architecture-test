@@ -10,8 +10,8 @@ final class LayerTest extends TestCase
 {
     public function test_make_layers_from_namespaces()
     {
-        $app = LayerBuilder::fromNamespace('PHPUnit\\Architecture');
-        $tests = LayerBuilder::fromNamespace('tests');
+        $app = $this->layerFromNamespace('PHPUnit\\Architecture');
+        $tests = $this->layerFromNamespace('tests');
 
         $this->assertDoesNotDependOn($app, $tests);
         $this->assertDependOn($tests, $app);
@@ -33,8 +33,8 @@ final class LayerTest extends TestCase
 
     public function test_make_layers_from_directories()
     {
-        $app = LayerBuilder::fromDirectory('src');
-        $tests = LayerBuilder::fromDirectory('tests');
+        $app = $this->layerFromDirectory('src');
+        $tests = $this->layerFromDirectory('tests');
 
         $this->assertDoesNotDependOn($app, $tests);
         $this->assertDependOn($tests, $app);
