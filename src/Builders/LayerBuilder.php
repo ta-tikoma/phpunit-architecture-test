@@ -8,6 +8,7 @@ use Closure;
 use PHPUnit\Architecture\Contracts\FilterContract;
 use PHPUnit\Architecture\Elements\Layer;
 use PHPUnit\Architecture\Elements\ObjectDescription;
+use PHPUnit\Architecture\Filters\ClosureFilter;
 use PHPUnit\Architecture\Filters\DirectoryStartFilter;
 use PHPUnit\Architecture\Filters\NamespaceStartFilter;
 use PHPUnit\Architecture\Storage\Filesystem;
@@ -37,6 +38,22 @@ final class LayerBuilder
         $this->exclude[] = $filter;
 
         return $this;
+    }
+
+    /**
+     * @param Closure $closure Contract: static function (ObjectDescription $objectDescription): bool
+     */
+    public function includeBy(Closure $closure): self
+    {
+        return $this->includeFilter(new ClosureFilter($closure));
+    }
+
+    /**
+     * @param Closure $closure Contract: static function (ObjectDescription $objectDescription): bool
+     */
+    public function excludeBy(Closure $closure): self
+    {
+        return $this->excludeFilter(new ClosureFilter($closure));
     }
 
     public function includeDirectory(string $path): self

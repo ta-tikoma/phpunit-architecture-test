@@ -41,11 +41,4 @@ final class DirectoryStartFilter implements FilterContract
 
         return false;
     }
-
-    public function __toString(): string
-    {
-        return implode(',', array_map(static function (array $starts): string {
-            return implode(',', $starts);
-        }, $this->starts));
-    }
 }

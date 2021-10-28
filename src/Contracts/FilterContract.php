@@ -9,6 +9,4 @@ use PHPUnit\Architecture\Elements\ObjectDescription;
 interface FilterContract
 {
     public function check(ObjectDescription $objectDescription): bool;
-
-    public function __toString(): string;
 }
