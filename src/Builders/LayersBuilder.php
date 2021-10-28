@@ -18,7 +18,7 @@ final class LayersBuilder
      */
     public static function fromNamespaceRegex(string $namespaceRegex): array
     {
-        $objects = self::byClosure(static function (ObjectDescription $objectDescription) use ($namespaceRegex): ?string {
+        return self::fromClosure(static function (ObjectDescription $objectDescription) use ($namespaceRegex): ?string {
             preg_match_all($namespaceRegex, $objectDescription->name, $matches, PREG_SET_ORDER, 0);
 
             if (isset($matches[0]['layer'])) {
@@ -27,17 +27,25 @@ final class LayersBuilder
 
             return null;
         });
+    }
 
-        $layers = [];
+    /**
+     * @param Closure $closure Contract: static function (ObjectDescription $objectNames): ?string
+     * @return Layer[]
+     */
+    public static function fromClosure(Closure $closure): array
+    {
+        $data = self::byClosure($closure);
 
-        foreach ($objects as $value) {
-            $layers[] = new Layer($value);
-        }
+        $layers = array_map(static function (array $objectNames): Layer {
+            return new Layer($objectNames);
+        }, $data);
 
         return $layers;
     }
 
     /**
+     * @param Closure $closure Contract: static function (ObjectDescription $objectNames): ?string
      * @return array<string, array>
      */
     private static function byClosure(Closure $closure): array

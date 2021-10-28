@@ -1,16 +1,16 @@
 # PHPUnit Application Architecture Test
 
-Idea: write architecture tests as well as feature and unit tests
+*****Idea**: write architecture tests as well as feature and unit tests
 
 ## Installation
 
-### Install via composer
+#### Install via composer
 
 ```bash
 composer required-dev ta-tikoma/phpunit-architecture-tests
 ```
 
-### Add trait to Test class
+#### Add trait to Test class
 
 ```php
 abstract class TestCase extends BaseTestCase
@@ -37,7 +37,7 @@ abstract class TestCase extends BaseTestCase
 
 ```
 
-### Run
+#### Run
 ```bash
 ./vendor/bin/phpunit
 ```
@@ -58,6 +58,6 @@ abstract class TestCase extends BaseTestCase
 - [Deptrac](https://github.com/qossmic/deptrac)
 - [PHP Architecture Tester](https://github.com/carlosas/phpat)
 
-### Advantages
+#### Advantages
 - Dynamic creation of layers by regular expression
 - Run along with the rest of tests from [phpunit](https://github.com/sebastianbergmann/phpunit)
