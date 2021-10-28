@@ -42,6 +42,18 @@ abstract class TestCase extends BaseTestCase
 ./vendor/bin/phpunit
 ```
 
+## How to build Layer
+
+- `PHPUnit\Architecture\Builders\LayerBuilder::fromNamespace($namespaceStart)` All object which namespace start from `$namespaceStart` fall in layer.
+- `PHPUnit\Architecture\Builders\LayerBuilder::fromDirectory($directoryStart)` All object which path start from `$directoryStart` fall in layer.
+- `(new \PHPUnit\Architecture\Builders\LayerBuilder)-> ... ->build()` Custom layer; you can use `includeDirectory`, `includeNamespace`, `excludeDirectory`, `excludeNamespace` to build it.
+- `PHPUnit\Architecture\Builders\LayersBuilder::fromNamespaceRegex($regex)` Builders multiple layers; regex must return group with name 'layer', it is layer identifier for checked object.
+
+## Asserts
+
+- `assertDependOn($A, $B)` Layer A must contains dependencies by layer B.
+- `assertDoesNotDependOn($A, $B)` Layer A (or layers in array A) must not contains dependencies by layer B (or layers in array B).
+
 ## Alternatives
 - [Deptrac](https://github.com/qossmic/deptrac)
 - [PHP Architecture Tester](https://github.com/carlosas/phpat)
