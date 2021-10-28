@@ -8,10 +8,7 @@ use PHPUnit\Architecture\Elements\ObjectDescription;
 
 interface FilterContract
 {
-    /**
-     * @return bool|string
-     */
-    public function check(ObjectDescription $objectDescription);
+    public function check(ObjectDescription $objectDescription): bool;
 
     public function __toString(): string;
 }

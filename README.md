@@ -37,7 +37,7 @@ abstract class TestCase extends BaseTestCase
 
 ```
 
-## Run
+### Run
 ```bash
 ./vendor/bin/phpunit
 ```

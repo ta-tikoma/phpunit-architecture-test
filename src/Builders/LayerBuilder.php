@@ -39,12 +39,12 @@ final class LayerBuilder
         return $this;
     }
 
-    public function includePath(string $path): self
+    public function includeDirectory(string $path): self
     {
         return $this->includeFilter(new DirectoryStartFilter($path));
     }
 
-    public function excludePath(string $path): self
+    public function excludeDirectory(string $path): self
     {
         return $this->excludeFilter(new DirectoryStartFilter($path));
     }
@@ -61,8 +61,6 @@ final class LayerBuilder
 
     public function build(): Layer
     {
-        $name = md5(implode(',', $this->include) . implode(',', $this->exclude));
-
         $objectNames = self::byClosure(function (ObjectDescription $objectDescription): bool {
             foreach ($this->exclude as $filter) {
                 /** @var FilterContract $filter */
@@ -81,7 +79,86 @@ final class LayerBuilder
             return false;
         });
 
-        return new Layer($name, $objectNames);
+        return new Layer($objectNames);
+    }
+
+
+    /**
+     * @param string|string[] $include
+     * @param string|string[] $exclude
+     */
+    public static function fromDirectory($include, $exclude = []): Layer
+    {
+        $include = is_array($include) ? $include : [$include];
+        $exclude = is_array($exclude) ? $exclude : [$exclude];
+
+        $include = array_map(static function (string $line): array {
+            $line = realpath(Filesystem::getBaseDir() . $line);
+            return [$line, strlen($line)];
+        }, $include);
+
+        $exclude = array_map(static function (string $line): array {
+            $line = realpath(Filesystem::getBaseDir() . $line);
+            return [$line, strlen($line)];
+        }, $exclude);
+
+        $objectNames = self::byClosure(static function (ObjectDescription $objectDescription) use ($include, $exclude): bool {
+            foreach ($exclude as list($line, $length)) {
+                /** @var int $length */
+                if (substr($objectDescription->path, 0, $length) === $line) {
+                    return false;
+                }
+            }
+
+            foreach ($include as list($line, $length)) {
+                /** @var int $length */
+                if (substr($objectDescription->path, 0, $length) === $line) {
+                    return true;
+                }
+            }
+
+            return false;
+        });
+
+        return new Layer($objectNames);
+    }
+
+    /**
+     * @param string|string[] $include
+     * @param string|string[] $exclude
+     */
+    public static function fromNamespace($include, $exclude = []): Layer
+    {
+        $include = is_array($include) ? $include : [$include];
+        $exclude = is_array($exclude) ? $exclude : [$exclude];
+
+        $include = array_map(static function (string $line): array {
+            return [$line, strlen($line)];
+        }, $include);
+
+        $exclude = array_map(static function (string $line): array {
+            return [$line, strlen($line)];
+        }, $exclude);
+
+        $objectNames = self::byClosure(static function (ObjectDescription $objectDescription) use ($include, $exclude): bool {
+            foreach ($exclude as list($line, $length)) {
+                /** @var int $length */
+                if (substr($objectDescription->name, 0, $length) === $line) {
+                    return false;
+                }
+            }
+
+            foreach ($include as list($line, $length)) {
+                /** @var int $length */
+                if (substr($objectDescription->name, 0, $length) === $line) {
+                    return true;
+                }
+            }
+
+            return false;
+        });
+
+        return new Layer($objectNames);
     }
 
     /**

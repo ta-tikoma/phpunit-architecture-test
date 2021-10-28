@@ -26,9 +26,11 @@ trait ArchitectureAsserts
      */
     public function assertDoesNotDependOn($layerA, $layerB): void
     {
+        $names = $this->getObjectsWhichUsesOnLayerAFromLayerB($layerA, $layerB);
         self::assertEquals(
             0,
-            count($this->getObjectsWhichUsesOnLayerAFromLayerB($layerA, $layerB)),
+            count($names),
+            'Found dependencies: ' . implode("\n", $names)
         );
     }
 
@@ -40,9 +42,11 @@ trait ArchitectureAsserts
      */
     public function assertDependOn($layerA, $layerB): void
     {
+        $names = $this->getObjectsWhichUsesOnLayerAFromLayerB($layerA, $layerB);
         self::assertNotEquals(
             0,
-            count($this->getObjectsWhichUsesOnLayerAFromLayerB($layerA, $layerB))
+            count($names),
+            'Dependencies not found'
         );
     }
 
@@ -72,7 +76,7 @@ trait ArchitectureAsserts
                         foreach ($layerToSearch->objectsName as $nameToSearch) {
                             $objectToSearch = ObjectsStorage::getObjectMap()[$nameToSearch];
                             if ($objectToSearch->name === $use) {
-                                $result[] = $nameToSearch;
+                                $result[] = "$name <- $nameToSearch";
                             }
                         }
                     }

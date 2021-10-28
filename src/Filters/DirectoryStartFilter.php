@@ -30,10 +30,7 @@ final class DirectoryStartFilter implements FilterContract
         }, $starts);
     }
 
-    /**
-     * @return bool|string
-     */
-    public function check(ObjectDescription $objectDescription)
+    public function check(ObjectDescription $objectDescription): bool
     {
         foreach ($this->starts as list($line, $length)) {
             /** @var int $length */

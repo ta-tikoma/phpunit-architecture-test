@@ -14,10 +14,11 @@ final class Layer
     public array $objectsName = [];
 
     public function __construct(
-        string $name,
         array $objectsName
     ) {
-        $this->name = $name;
+        sort($objectsName);
+
+        $this->name = implode(',', $objectsName);
         $this->objectsName = $objectsName;
     }
 }

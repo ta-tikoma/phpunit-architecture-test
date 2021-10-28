@@ -10,7 +10,7 @@ final class LayersTest extends TestCase
 {
     public function test_make_layers_and_assert_depends()
     {
-        $layers = LayersBuilder::fromNamespaceRegex('/^(?\'name\'.*\\\\Architecture\\\\Builders\\\\[^\\\\]+)/m');
+        $layers = LayersBuilder::fromNamespaceRegex('/^(?\'layer\'.*\\\\Architecture\\\\Builders\\\\[^\\\\]+)/m');
 
         $this->assertDoesNotDependOn($layers, $layers);
     }

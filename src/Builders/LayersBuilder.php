@@ -12,6 +12,8 @@ use PHPUnit\Architecture\Storage\ObjectsStorage;
 final class LayersBuilder
 {
     /**
+     * Regex must contains group with name 'layer'
+     *
      * @return Layer[]
      */
     public static function fromNamespaceRegex(string $namespaceRegex): array
@@ -19,21 +21,25 @@ final class LayersBuilder
         $objects = self::byClosure(static function (ObjectDescription $objectDescription) use ($namespaceRegex): ?string {
             preg_match_all($namespaceRegex, $objectDescription->name, $matches, PREG_SET_ORDER, 0);
 
-            if (isset($matches[0]['name'])) {
-                return $matches[0]['name'];
+            if (isset($matches[0]['layer'])) {
+                return $matches[0]['layer'];
             }
 
             return null;
         });
 
         $layers = [];
-        foreach ($objects as $name => $value) {
-            $layers[] = new Layer($name, $value);
+
+        foreach ($objects as $value) {
+            $layers[] = new Layer($value);
         }
 
         return $layers;
     }
 
+    /**
+     * @return array<string, array>
+     */
     private static function byClosure(Closure $closure): array
     {
         $objectNames = [];
