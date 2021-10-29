@@ -51,8 +51,17 @@ abstract class TestCase extends BaseTestCase
 
 ## Asserts
 
+### Dependencies
+
+**Example:** Controllers don't use Repositories only via Services
+
 - `assertDependOn($A, $B)` Layer A must contains dependencies by layer B.
 - `assertDoesNotDependOn($A, $B)` Layer A (or layers in array A) must not contains dependencies by layer B (or layers in array B).
+
+### Methods arguments type
+
+- `assertIncomingsFrom($A, $B)` Layer A must contains arguments with types from Layer B
+- `assertIncomingsNotFrom($A, $B)` Layer A must not contains arguments with types from Layer B
 
 ## Alternatives
 - [Deptrac](https://github.com/qossmic/deptrac)
@@ -61,3 +70,4 @@ abstract class TestCase extends BaseTestCase
 #### Advantages
 - Dynamic creation of layers by regular expression
 - Run along with the rest of tests from [phpunit](https://github.com/sebastianbergmann/phpunit)
+- Asserts to method arguments (for check dependent injection)
