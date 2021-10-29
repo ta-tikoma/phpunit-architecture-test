@@ -26,6 +26,11 @@ final class LayerBuilder
      */
     public array $exclude = [];
 
+    /**
+     * @var string[]
+     */
+    public array $objectNames = [];
+
     public function includeFilter(FilterContract $filter): self
     {
         $this->include[] = $filter;
@@ -56,21 +61,43 @@ final class LayerBuilder
         return $this->excludeFilter(new ClosureFilter($closure));
     }
 
+    /**
+     * @param string $objectName Like: ProductController::class, Product::class, ...
+     */
+    public function includeObject(string $objectName): self
+    {
+        $this->objectNames[] = $objectName;
+
+        return $this;
+    }
+
+    /**
+     * @param string $path Like 'app',  'app/Models', 'src', 'tests' ...
+     */
     public function includeDirectory(string $path): self
     {
         return $this->includeFilter(new DirectoryStartFilter($path));
     }
 
+    /**
+     * @param string $path Like 'app',  'app/Models', 'src', 'tests' ...
+     */
     public function excludeDirectory(string $path): self
     {
         return $this->excludeFilter(new DirectoryStartFilter($path));
     }
 
+    /**
+     * @param string $namespace Like 'App',  'App\\Models', 'App\\Http\\Controllers', 'tests' ...
+     */
     public function includeNamespace(string $namespace): self
     {
         return $this->includeFilter(new NamespaceStartFilter($namespace));
     }
 
+    /**
+     * @param string $namespace Like 'App',  'App\\Models', 'App\\Http\\Controllers', 'tests' ...
+     */
     public function excludeNamespace(string $namespace): self
     {
         return $this->excludeFilter(new NamespaceStartFilter($namespace));
@@ -96,7 +123,12 @@ final class LayerBuilder
             return false;
         });
 
-        return new Layer($objectNames);
+        return new Layer(
+            array_merge(
+                $this->objectNames,
+                $objectNames
+            )
+        );
     }
 
 
