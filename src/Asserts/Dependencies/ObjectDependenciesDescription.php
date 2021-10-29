@@ -8,7 +8,7 @@ use PhpParser\Node;
 use PHPUnit\Architecture\Elements\ObjectDescriptionBase;
 
 /**
- * Open to extends
+ * Describe object dependencies
  */
 class ObjectDependenciesDescription extends ObjectDescriptionBase
 {
