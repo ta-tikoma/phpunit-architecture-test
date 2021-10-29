@@ -7,7 +7,7 @@
 #### Install via composer
 
 ```bash
-composer required-dev ta-tikoma/phpunit-architecture-tests
+composer require --dev ta-tikoma/phpunit-architecture-test
 ```
 
 #### Add trait to Test class

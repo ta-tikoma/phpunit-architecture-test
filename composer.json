@@ -18,7 +18,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "phpunit/phpunit": "9.5.x-dev",
+        "phpunit/phpunit": "^9",
         "nikic/php-parser": "^4.13",
         "symfony/finder": "5.4.x-dev"
     },

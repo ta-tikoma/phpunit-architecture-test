@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b4b76924f1acddbfa7cc4de78475726b",
+    "content-hash": "c25f777a5aefccbfa302f1472277c6a3",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -361,12 +361,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "0005eb9eaecc2a3a00b8ee34c06643a316ebb228"
+                "reference": "622548b623e81ca6d78b721c5e029f4ce664f170"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/0005eb9eaecc2a3a00b8ee34c06643a316ebb228",
-                "reference": "0005eb9eaecc2a3a00b8ee34c06643a316ebb228",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/622548b623e81ca6d78b721c5e029f4ce664f170",
+                "reference": "622548b623e81ca6d78b721c5e029f4ce664f170",
                 "shasum": ""
             },
             "require": {
@@ -409,9 +409,9 @@
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
             "support": {
                 "issues": "https://github.com/phpDocumentor/ReflectionDocBlock/issues",
-                "source": "https://github.com/phpDocumentor/ReflectionDocBlock/tree/master"
+                "source": "https://github.com/phpDocumentor/ReflectionDocBlock/tree/5.3.0"
             },
-            "time": "2021-10-05T20:58:53+00:00"
+            "time": "2021-10-19T17:43:47+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -419,12 +419,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "a12f7e301eb7258bb68acd89d4aefa05c2906cae"
+                "reference": "9dc4bb058ffd1f194059f6b099bd6ca9c726aed4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/a12f7e301eb7258bb68acd89d4aefa05c2906cae",
-                "reference": "a12f7e301eb7258bb68acd89d4aefa05c2906cae",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/9dc4bb058ffd1f194059f6b099bd6ca9c726aed4",
+                "reference": "9dc4bb058ffd1f194059f6b099bd6ca9c726aed4",
                 "shasum": ""
             },
             "require": {
@@ -460,9 +460,9 @@
             "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
             "support": {
                 "issues": "https://github.com/phpDocumentor/TypeResolver/issues",
-                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.5.1"
+                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.x"
             },
-            "time": "2021-10-02T14:08:47+00:00"
+            "time": "2021-10-26T18:53:16+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -538,12 +538,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "3ca2f862e11bb02cb7a97185afed902522e2edbb"
+                "reference": "60146aa09220e0b286805fbe6a81cec22594c3b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/3ca2f862e11bb02cb7a97185afed902522e2edbb",
-                "reference": "3ca2f862e11bb02cb7a97185afed902522e2edbb",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/60146aa09220e0b286805fbe6a81cec22594c3b0",
+                "reference": "60146aa09220e0b286805fbe6a81cec22594c3b0",
                 "shasum": ""
             },
             "require": {
@@ -607,7 +607,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-09-25T04:46:46+00:00"
+            "time": "2021-10-29T05:27:19+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -856,12 +856,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "e5ba32bbd46d16d96fb2050116add184066dac65"
+                "reference": "723de3effbd9b0ca5896c298d8fca41e3470d3d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/e5ba32bbd46d16d96fb2050116add184066dac65",
-                "reference": "e5ba32bbd46d16d96fb2050116add184066dac65",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/723de3effbd9b0ca5896c298d8fca41e3470d3d5",
+                "reference": "723de3effbd9b0ca5896c298d8fca41e3470d3d5",
                 "shasum": ""
             },
             "require": {
@@ -943,7 +943,7 @@
             },
             "funding": [
                 {
-                    "url": "https://phpunit.de/donate.html",
+                    "url": "https://phpunit.de/sponsors.html",
                     "type": "custom"
                 },
                 {
@@ -951,7 +951,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-10-17T15:13:37+00:00"
+            "time": "2021-10-28T05:33:07+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -1807,7 +1807,6 @@
                     "type": "github"
                 }
             ],
-            "abandoned": true,
             "time": "2020-09-28T06:45:17+00:00"
         },
         {
@@ -1992,12 +1991,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
-                "reference": "3d70c86483c61de33232a6197cf84e356f88fdf1"
+                "reference": "e6c34f742f52cf5c6eae814f925d6654fa7603cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/3d70c86483c61de33232a6197cf84e356f88fdf1",
-                "reference": "3d70c86483c61de33232a6197cf84e356f88fdf1",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/e6c34f742f52cf5c6eae814f925d6654fa7603cd",
+                "reference": "e6c34f742f52cf5c6eae814f925d6654fa7603cd",
                 "shasum": ""
             },
             "require": {
@@ -2047,7 +2046,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-10-04T18:34:22+00:00"
+            "time": "2021-10-27T13:14:56+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -2055,16 +2054,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
-                "reference": "f24ae462b1d60c333df104f0b81ec7d0e12f6e9f"
+                "reference": "30885182c981ab175d4d034db0f6f469898070ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/f24ae462b1d60c333df104f0b81ec7d0e12f6e9f",
-                "reference": "f24ae462b1d60c333df104f0b81ec7d0e12f6e9f",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/30885182c981ab175d4d034db0f6f469898070ab",
+                "reference": "30885182c981ab175d4d034db0f6f469898070ab",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.1"
+            },
+            "provide": {
+                "ext-ctype": "*"
             },
             "suggest": {
                 "ext-ctype": "For best performance"
@@ -2127,7 +2129,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-09-14T14:02:44+00:00"
+            "time": "2021-10-20T20:35:02+00:00"
         },
         {
             "name": "symfony/polyfill-php80",
@@ -2327,7 +2329,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "phpunit/phpunit": 20,
         "symfony/finder": 20
     },
     "prefer-stable": false,
