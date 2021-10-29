@@ -24,10 +24,14 @@ final class ObjectsStorage
         self::$objectMap = [];
 
         foreach (Filesystem::files() as $path) {
+            /** @var ObjectDescription $description */
             $description = self::$descriptionClass::make($path);
             if ($description === null) {
                 continue;
             }
+
+            // save memory
+            $description->stmts = [];
 
             self::$objectMap[$description->name] = $description;
         }

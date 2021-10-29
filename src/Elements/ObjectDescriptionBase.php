@@ -65,11 +65,13 @@ class ObjectDescriptionBase
             return null;
         }
 
-        $name = $object->namespacedName->toCodeString();
+        if (!property_exists($object, 'namespacedName')) {
+            return null;
+        }
 
         $description = new static();
         $description->path = $path;
-        $description->name = $name;
+        $description->name = $object->namespacedName->toString();
         $description->stmts = $stmts;
 
         return $description;
