@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace PHPUnit\Architecture\Storage;
 
-use PHPUnit\Architecture\Asserts\Dependencies\ObjectDependenciesDescription;
 use PHPUnit\Architecture\Elements\ObjectDescription;
 
 final class ObjectsStorage
 {
-    public static string $descriptionClass = ObjectDependenciesDescription::class;
+    public static string $descriptionClass = ObjectDescription::class;
 
     /**
      * @var ObjectDescription[]

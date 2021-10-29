@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace PHPUnit\Architecture\Asserts\Dependencies;
 
 use PhpParser\Node;
-use PHPUnit\Architecture\Elements\ObjectDescription;
+use PHPUnit\Architecture\Elements\ObjectDescriptionBase;
 
 /**
  * Open to extends
  */
-class ObjectDependenciesDescription extends ObjectDescription
+class ObjectDependenciesDescription extends ObjectDescriptionBase
 {
     /**
      * Names of uses objects
