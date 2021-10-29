@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace tests;
+namespace tests\Architecture;
+
+use tests\TestCase;
 
 final class LayersTest extends TestCase
 {

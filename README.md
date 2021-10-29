@@ -42,6 +42,14 @@ abstract class TestCase extends BaseTestCase
 ./vendor/bin/phpunit
 ```
 
+## Test files structure
+
+- tests
+    - Architecture
+        - SomeTest.php
+    - Feature
+    - Unit
+
 ## How to build Layer
 
 - `$this->layerFromNamespace($namespaceStart)` All object which namespace start from `$namespaceStart` fall in layer.

@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace tests;
+namespace tests\Architecture;
 
 use PHPUnit\Architecture\Builders\LayerBuilder;
+use tests\TestCase;
 
 final class LayerTest extends TestCase
 {
