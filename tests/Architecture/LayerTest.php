@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace tests\Architecture;
 
-use PHPUnit\Architecture\Builders\LayerBuilder;
 use tests\TestCase;
 
 final class LayerTest extends TestCase
@@ -20,11 +19,11 @@ final class LayerTest extends TestCase
 
     public function test_make_layers_from_namespaces_filter()
     {
-        $app = (new LayerBuilder)
+        $app = $this->layer()
             ->includeNamespace('PHPUnit\\Architecture')
             ->build();
 
-        $tests = (new LayerBuilder)
+        $tests = $this->layer()
             ->includeNamespace('tests')
             ->build();
 
@@ -43,11 +42,11 @@ final class LayerTest extends TestCase
 
     public function test_make_layers_from_path_filter()
     {
-        $app = (new LayerBuilder)
+        $app = $this->layer()
             ->includeDirectory('src')
             ->build();
 
-        $tests = (new LayerBuilder)
+        $tests = $this->layer()
             ->includeDirectory('tests')
             ->build();
 
@@ -57,11 +56,11 @@ final class LayerTest extends TestCase
 
     public function test_male_layer_from_namespace_regex_filter()
     {
-        $assertTraits = (new LayerBuilder)
+        $assertTraits = $this->layer()
             ->includeNamespaceRegex('/^PHPUnit\\\\Architecture\\\\Asserts\\\\[^\\\\]+\\\\.+Asserts$/')
             ->build();
 
-        $layer = (new LayerBuilder)
+        $layer = $this->layer()
             ->includeNamespaceRegex('/^PHPUnit\\\\Architecture\\\\Elements\\\\Layer$/')
             ->build();
 

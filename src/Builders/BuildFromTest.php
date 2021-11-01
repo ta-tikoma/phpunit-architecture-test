@@ -45,4 +45,12 @@ trait BuildFromTest
     {
         return LayersBuilder::fromClosure($closure);
     }
+
+    /**
+     * Access to layer builder
+     */
+    public function layer(): LayerBuilder
+    {
+        return new LayerBuilder;
+    }
 }
