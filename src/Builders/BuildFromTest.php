@@ -42,11 +42,13 @@ trait BuildFromTest
     /**
      * Regex must contains group with name 'layer'
      *
+     * @param string $nameRegex Example: `/^(?\'layer\'.*\\\\Architecture\\\\Builders\\\\[^\\\\]+)/m`
+     *
      * @return Layer[]
      */
-    public function layersFromNameRegex(string $namespaceRegex): array
+    public function layersFromNameRegex(string $nameRegex): array
     {
-        return LayersBuilder::fromNameRegex($namespaceRegex);
+        return LayersBuilder::fromNameRegex($nameRegex);
     }
 
     /**
