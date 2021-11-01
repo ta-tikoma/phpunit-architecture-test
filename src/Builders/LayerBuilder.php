@@ -73,7 +73,7 @@ final class LayerBuilder
     }
 
     /**
-     * @param string $regex
+     * @param string $regex '/^PHPUnit\\\\Architecture\\\\Asserts\\\\[^\\\\]+\\\\.+Asserts$/'
      */
     public function includeNamespaceRegex(string $regex): self
     {
@@ -81,7 +81,7 @@ final class LayerBuilder
     }
 
     /**
-     * @param string $regex
+     * @param string $regex '/^PHPUnit\\\\Architecture\\\\Asserts\\\\[^\\\\]+\\\\.+Asserts$/'
      */
     public function excludeNamespaceRegex(string $regex): self
     {
