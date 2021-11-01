@@ -20,17 +20,17 @@ final class LayerBuilder
     /**
      * @var FilterContract[]
      */
-    public array $include = [];
+    private array $include = [];
 
     /**
      * @var FilterContract[]
      */
-    public array $exclude = [];
+    private array $exclude = [];
 
     /**
      * @var string[]
      */
-    public array $objectNames = [];
+    private array $objectNames = [];
 
     public function includeFilter(FilterContract $filter): self
     {
