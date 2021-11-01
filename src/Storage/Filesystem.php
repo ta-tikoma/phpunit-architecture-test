@@ -26,6 +26,7 @@ final class Filesystem
         $paths = Finder::create()
             ->files()
             ->followLinks()
+            ->exclude('vendor')
             ->name('/\.php$/')
             ->in(Filesystem::getBaseDir());
 
