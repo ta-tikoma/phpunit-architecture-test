@@ -16,10 +16,10 @@ final class LayersBuilder
      *
      * @return Layer[]
      */
-    public static function fromNamespaceRegex(string $namespaceRegex): array
+    public static function fromNameRegex(string $nameRegex): array
     {
-        return self::fromClosure(static function (ObjectDescription $objectDescription) use ($namespaceRegex): ?string {
-            preg_match_all($namespaceRegex, $objectDescription->name, $matches, PREG_SET_ORDER, 0);
+        return self::fromClosure(static function (ObjectDescription $objectDescription) use ($nameRegex): ?string {
+            preg_match_all($nameRegex, $objectDescription->name, $matches, PREG_SET_ORDER, 0);
 
             if (isset($matches[0]['layer'])) {
                 return $matches[0]['layer'];

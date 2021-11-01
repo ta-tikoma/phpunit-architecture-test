@@ -10,7 +10,7 @@ use PHPUnit\Architecture\Elements\ObjectDescription;
 /**
  * Filter by namespace regex
  */
-final class NamespaceRegexFilter implements FilterContract
+final class NameRegexFilter implements FilterContract
 {
     public string $regex;
 

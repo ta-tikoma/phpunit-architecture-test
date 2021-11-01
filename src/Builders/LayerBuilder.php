@@ -9,10 +9,9 @@ use PHPUnit\Architecture\Contracts\FilterContract;
 use PHPUnit\Architecture\Elements\Layer;
 use PHPUnit\Architecture\Elements\ObjectDescription;
 use PHPUnit\Architecture\Filters\ClosureFilter;
-use PHPUnit\Architecture\Filters\DirectoryStartFilter;
-use PHPUnit\Architecture\Filters\NamespaceRegexFilter;
-use PHPUnit\Architecture\Filters\NamespaceStartFilter;
-use PHPUnit\Architecture\Storage\Filesystem;
+use PHPUnit\Architecture\Filters\NameRegexFilter;
+use PHPUnit\Architecture\Filters\NameStartFilter;
+use PHPUnit\Architecture\Filters\PathStartFilter;
 use PHPUnit\Architecture\Storage\ObjectsStorage;
 
 final class LayerBuilder
@@ -75,49 +74,49 @@ final class LayerBuilder
     /**
      * @param string $regex '/^PHPUnit\\\\Architecture\\\\Asserts\\\\[^\\\\]+\\\\.+Asserts$/'
      */
-    public function includeNamespaceRegex(string $regex): self
+    public function includeNameRegex(string $regex): self
     {
-        return $this->includeFilter(new NamespaceRegexFilter($regex));
+        return $this->includeFilter(new NameRegexFilter($regex));
     }
 
     /**
      * @param string $regex '/^PHPUnit\\\\Architecture\\\\Asserts\\\\[^\\\\]+\\\\.+Asserts$/'
      */
-    public function excludeNamespaceRegex(string $regex): self
+    public function excludeNameRegex(string $regex): self
     {
-        return $this->excludeFilter(new NamespaceRegexFilter($regex));
+        return $this->excludeFilter(new NameRegexFilter($regex));
     }
 
     /**
      * @param string $path Like 'app',  'app/Models', 'src', 'tests' ...
      */
-    public function includeDirectory(string $path): self
+    public function includePath(string $path): self
     {
-        return $this->includeFilter(new DirectoryStartFilter($path));
+        return $this->includeFilter(new PathStartFilter($path));
     }
 
     /**
      * @param string $path Like 'app',  'app/Models', 'src', 'tests' ...
      */
-    public function excludeDirectory(string $path): self
+    public function excludePath(string $path): self
     {
-        return $this->excludeFilter(new DirectoryStartFilter($path));
+        return $this->excludeFilter(new PathStartFilter($path));
     }
 
     /**
      * @param string $namespace Like 'App',  'App\\Models', 'App\\Http\\Controllers', 'tests' ...
      */
-    public function includeNamespace(string $namespace): self
+    public function includeNameStart(string $namespace): self
     {
-        return $this->includeFilter(new NamespaceStartFilter($namespace));
+        return $this->includeFilter(new NameStartFilter($namespace));
     }
 
     /**
      * @param string $namespace Like 'App',  'App\\Models', 'App\\Http\\Controllers', 'tests' ...
      */
-    public function excludeNamespace(string $namespace): self
+    public function excludeNameStart(string $namespace): self
     {
-        return $this->excludeFilter(new NamespaceStartFilter($namespace));
+        return $this->excludeFilter(new NameStartFilter($namespace));
     }
 
     public function build(): Layer
@@ -146,85 +145,6 @@ final class LayerBuilder
                 $objectNames
             )
         );
-    }
-
-
-    /**
-     * @param string|string[] $include
-     * @param string|string[] $exclude
-     */
-    public static function fromDirectory($include, $exclude = []): Layer
-    {
-        $include = is_array($include) ? $include : [$include];
-        $exclude = is_array($exclude) ? $exclude : [$exclude];
-
-        $include = array_map(static function (string $line): array {
-            $line = realpath(Filesystem::getBaseDir() . $line);
-            return [$line, strlen($line)];
-        }, $include);
-
-        $exclude = array_map(static function (string $line): array {
-            $line = realpath(Filesystem::getBaseDir() . $line);
-            return [$line, strlen($line)];
-        }, $exclude);
-
-        $objectNames = self::byClosure(static function (ObjectDescription $objectDescription) use ($include, $exclude): bool {
-            foreach ($exclude as list($line, $length)) {
-                /** @var int $length */
-                if (substr($objectDescription->path, 0, $length) === $line) {
-                    return false;
-                }
-            }
-
-            foreach ($include as list($line, $length)) {
-                /** @var int $length */
-                if (substr($objectDescription->path, 0, $length) === $line) {
-                    return true;
-                }
-            }
-
-            return false;
-        });
-
-        return new Layer($objectNames);
-    }
-
-    /**
-     * @param string|string[] $include
-     * @param string|string[] $exclude
-     */
-    public static function fromNamespace($include, $exclude = []): Layer
-    {
-        $include = is_array($include) ? $include : [$include];
-        $exclude = is_array($exclude) ? $exclude : [$exclude];
-
-        $include = array_map(static function (string $line): array {
-            return [$line, strlen($line)];
-        }, $include);
-
-        $exclude = array_map(static function (string $line): array {
-            return [$line, strlen($line)];
-        }, $exclude);
-
-        $objectNames = self::byClosure(static function (ObjectDescription $objectDescription) use ($include, $exclude): bool {
-            foreach ($exclude as list($line, $length)) {
-                /** @var int $length */
-                if (substr($objectDescription->name, 0, $length) === $line) {
-                    return false;
-                }
-            }
-
-            foreach ($include as list($line, $length)) {
-                /** @var int $length */
-                if (substr($objectDescription->name, 0, $length) === $line) {
-                    return true;
-                }
-            }
-
-            return false;
-        });
-
-        return new Layer($objectNames);
     }
 
     /**

@@ -6,11 +6,13 @@ namespace PHPUnit\Architecture\Filters;
 
 use PHPUnit\Architecture\Contracts\FilterContract;
 use PHPUnit\Architecture\Elements\ObjectDescription;
+use PHPUnit\Architecture\Storage\Filesystem;
+use RuntimeException;
 
 /**
- * Filter by start of namespace
+ * Filter by start of path
  */
-final class NamespaceStartFilter implements FilterContract
+final class PathStartFilter implements FilterContract
 {
     public array $starts;
 
@@ -22,6 +24,11 @@ final class NamespaceStartFilter implements FilterContract
         $starts = is_array($starts) ? $starts : [$starts];
 
         $this->starts = array_map(static function (string $line): array {
+            $line = realpath(Filesystem::getBaseDir() . $line);
+
+            if ($line === false) {
+                throw new RuntimeException("Path '$line' not found");
+            }
             return [$line, strlen($line)];
         }, $starts);
     }
@@ -30,7 +37,7 @@ final class NamespaceStartFilter implements FilterContract
     {
         foreach ($this->starts as list($line, $length)) {
             /** @var int $length */
-            if (substr($objectDescription->name, 0, $length) === $line) {
+            if (substr($objectDescription->path, 0, $length) === $line) {
                 return true;
             }
         }

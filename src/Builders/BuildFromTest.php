@@ -11,20 +11,32 @@ trait BuildFromTest
 {
     /**
      * @param string|string[] $include start of namespace for include to layer
-     * @param string|string[] $exclude start of namespace for exclude from layer
      */
-    public function layerFromNamespace($include, $exclude = []): Layer
+    public function layerFromNameStart($include): Layer
     {
-        return LayerBuilder::fromNamespace($include, $exclude);
+        $include = is_array($include) ? $include : [$include];
+
+        $builder = (new LayerBuilder);
+        foreach ($include as $start) {
+            $builder = $builder->includeNameStart($start);
+        }
+
+        return $builder->build();
     }
 
     /**
      * @param string|string[] $include directory for include to layer
-     * @param string|string[] $exclude directory for exclude from layer
      */
-    public function layerFromDirectory($include, $exclude = []): Layer
+    public function layerFromPath($include): Layer
     {
-        return LayerBuilder::fromDirectory($include, $exclude);
+        $include = is_array($include) ? $include : [$include];
+
+        $builder = (new LayerBuilder);
+        foreach ($include as $start) {
+            $builder = $builder->includePath($start);
+        }
+
+        return $builder->build();
     }
 
     /**
@@ -32,9 +44,9 @@ trait BuildFromTest
      *
      * @return Layer[]
      */
-    public function layersFromNamespaceRegex(string $namespaceRegex): array
+    public function layersFromNameRegex(string $namespaceRegex): array
     {
-        return LayersBuilder::fromNamespaceRegex($namespaceRegex);
+        return LayersBuilder::fromNameRegex($namespaceRegex);
     }
 
     /**
