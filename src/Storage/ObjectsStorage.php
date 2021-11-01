@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace PHPUnit\Architecture\Storage;
 
 use PHPUnit\Architecture\Elements\ObjectDescription;
+use PHPUnit\Architecture\Services\ServiceContainer;
 
 final class ObjectsStorage
 {
-    public static string $descriptionClass = ObjectDescription::class;
-
     /**
      * @var ObjectDescription[]
      */
@@ -25,7 +24,7 @@ final class ObjectsStorage
 
         foreach (Filesystem::files() as $path) {
             /** @var ObjectDescription $description */
-            $description = self::$descriptionClass::make($path);
+            $description = ServiceContainer::$descriptionClass::make($path);
             if ($description === null) {
                 continue;
             }
