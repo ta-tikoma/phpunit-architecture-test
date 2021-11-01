@@ -57,9 +57,11 @@ abstract class TestCase extends BaseTestCase
 - `(new \PHPUnit\Architecture\Builders\LayerBuilder)-> ... ->build()` Custom layer. You can use:
     - `includeDirectory`
     - `includeNamespace`
+    - `includeNamespaceRegex`
     - `includeObject`
     - `excludeDirectory`
     - `excludeNamespace` 
+    - `excludeNamespaceRegex` 
 - `$this->layersFromNamespaceRegex($regex)` Builders multiple layers; regex must return group with name 'layer', it is layer identifier for checked object.
 
 ## Asserts

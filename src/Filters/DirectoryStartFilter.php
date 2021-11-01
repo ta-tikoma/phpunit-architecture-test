@@ -9,6 +9,9 @@ use PHPUnit\Architecture\Elements\ObjectDescription;
 use PHPUnit\Architecture\Storage\Filesystem;
 use RuntimeException;
 
+/**
+ * Filter by start of path
+ */
 final class DirectoryStartFilter implements FilterContract
 {
     public array $starts;

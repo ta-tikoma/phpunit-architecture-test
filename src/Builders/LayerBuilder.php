@@ -10,6 +10,7 @@ use PHPUnit\Architecture\Elements\Layer;
 use PHPUnit\Architecture\Elements\ObjectDescription;
 use PHPUnit\Architecture\Filters\ClosureFilter;
 use PHPUnit\Architecture\Filters\DirectoryStartFilter;
+use PHPUnit\Architecture\Filters\NamespaceRegexFilter;
 use PHPUnit\Architecture\Filters\NamespaceStartFilter;
 use PHPUnit\Architecture\Storage\Filesystem;
 use PHPUnit\Architecture\Storage\ObjectsStorage;
@@ -69,6 +70,22 @@ final class LayerBuilder
         $this->objectNames[] = $objectName;
 
         return $this;
+    }
+
+    /**
+     * @param string $regex
+     */
+    public function includeNamespaceRegex(string $regex): self
+    {
+        return $this->includeFilter(new NamespaceRegexFilter($regex));
+    }
+
+    /**
+     * @param string $regex
+     */
+    public function excludeNamespaceRegex(string $regex): self
+    {
+        return $this->excludeFilter(new NamespaceRegexFilter($regex));
     }
 
     /**

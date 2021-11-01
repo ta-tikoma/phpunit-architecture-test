@@ -8,6 +8,9 @@ use Closure;
 use PHPUnit\Architecture\Contracts\FilterContract;
 use PHPUnit\Architecture\Elements\ObjectDescription;
 
+/**
+ * Custom filter
+ */
 final class ClosureFilter implements FilterContract
 {
     public Closure $closure;

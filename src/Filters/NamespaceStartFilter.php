@@ -7,6 +7,9 @@ namespace PHPUnit\Architecture\Filters;
 use PHPUnit\Architecture\Contracts\FilterContract;
 use PHPUnit\Architecture\Elements\ObjectDescription;
 
+/**
+ * Filter by start of namespace
+ */
 final class NamespaceStartFilter implements FilterContract
 {
     public array $starts;

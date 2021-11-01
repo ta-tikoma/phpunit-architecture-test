@@ -54,4 +54,18 @@ final class LayerTest extends TestCase
         $this->assertDoesNotDependOn($app, $tests);
         $this->assertDependOn($tests, $app);
     }
+
+    public function test_male_layer_from_namespace_regex_filter()
+    {
+        $assertTraits = (new LayerBuilder)
+            ->includeNamespaceRegex('/^PHPUnit\\\\Architecture\\\\Asserts\\\\[^\\\\]+\\\\.+Asserts$/')
+            ->build();
+
+        $layer = (new LayerBuilder)
+            ->includeNamespaceRegex('/^PHPUnit\\\\Architecture\\\\Elements\\\\Layer$/')
+            ->build();
+
+        $this->assertDependOn($assertTraits, $layer);
+        $this->assertDoesNotDependOn($layer, $assertTraits);
+    }
 }
