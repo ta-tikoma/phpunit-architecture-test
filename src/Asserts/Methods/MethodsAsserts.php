@@ -81,6 +81,11 @@ trait MethodsAsserts
 
                     foreach ($method->args as list($aType, $aName)) {
                         foreach ($layersToSearch as $layerToSearch) {
+                            // do not test layer with self
+                            if ($layer->equals($layerToSearch)) {
+                                continue;
+                            }
+
                             foreach ($layerToSearch->objectsName as $nameToSearch) {
                                 if ($nameToSearch === $aType) {
                                     $result[] = "$name : {$method->name} -> $aName <- $nameToSearch";
@@ -159,6 +164,11 @@ trait MethodsAsserts
                     }
 
                     foreach ($layersToSearch as $layerToSearch) {
+                        // do not test layer with self
+                        if ($layer->equals($layerToSearch)) {
+                            continue;
+                        }
+
                         foreach ($layerToSearch->objectsName as $nameToSearch) {
                             if ($nameToSearch === $method->return) {
                                 $result[] = "$name : {$method->name} -> {$method->return} <- $nameToSearch";

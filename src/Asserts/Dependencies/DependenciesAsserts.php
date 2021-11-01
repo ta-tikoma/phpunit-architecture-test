@@ -71,6 +71,11 @@ trait DependenciesAsserts
                 $object = ObjectsStorage::getObjectMap()[$name];
                 foreach ($object->uses as $use) {
                     foreach ($layersToSearch as $layerToSearch) {
+                        // do not test layer with self
+                        if ($layer->equals($layerToSearch)) {
+                            continue;
+                        }
+
                         foreach ($layerToSearch->objectsName as $nameToSearch) {
                             $objectToSearch = ObjectsStorage::getObjectMap()[$nameToSearch];
                             if ($objectToSearch->name === $use) {

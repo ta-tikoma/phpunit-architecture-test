@@ -21,4 +21,12 @@ final class Layer
         $this->name = implode(',', $objectsName);
         $this->objectsName = $objectsName;
     }
+
+    /**
+     * Compare layers
+     */
+    public function equals(Layer $layer): bool
+    {
+        return $this->name === $layer->name;
+    }
 }
