@@ -75,6 +75,8 @@ abstract class TestCase extends BaseTestCase
 
 - `assertIncomingsFrom($A, $B)` Layer A must contains arguments with types from Layer B
 - `assertIncomingsNotFrom($A, $B)` Layer A must not contains arguments with types from Layer B
+- `assertOutgoingFrom($A, $B)` Layer A must contains methods return types from Layer B
+- `assertOutgoingNotFrom($A, $B)` Layer A must not contains methods return types from Layer B
 
 ## Alternatives
 - [Deptrac](https://github.com/qossmic/deptrac)
