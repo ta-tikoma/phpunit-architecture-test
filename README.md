@@ -28,8 +28,8 @@ abstract class TestCase extends BaseTestCase
 ```php
     public function test_make_layer_from_namespace()
     {
-        $app = LayerBuilder::fromNamespace('PHPUnit\\Architecture');
-        $tests = LayerBuilder::fromNamespace('tests');
+        $app = $this->layerFromNameStart('PHPUnit\\Architecture');
+        $tests = $this->layerFromNameStart('tests');
 
         $this->assertDoesNotDependOn($app, $tests);
         $this->assertDependOn($tests, $app);
@@ -52,17 +52,18 @@ abstract class TestCase extends BaseTestCase
 
 ## How to build Layer
 
-- `$this->layerFromNamespace($namespaceStart)` All object which namespace start from `$namespaceStart` fall in layer.
-- `$this->layerFromDirectory($directoryStart)` All object which path start from `$directoryStart` fall in layer.
-- `(new \PHPUnit\Architecture\Builders\LayerBuilder)-> ... ->build()` Custom layer. You can use:
-    - `includeDirectory`
-    - `includeNamespace`
-    - `includeNamespaceRegex`
+- `$this->layerFromNameStart($nameStart)` All object which names start from `$nameStart` fall in layer.
+- `$this->layerFromPath($path)` All object which path start from `$path` fall in layer.
+- `$this->layer()-> ... ->build()` Custom layer. You can use:
+    - `includePath`
+    - `includeNameStart`
+    - `includeNameRegex`
     - `includeObject`
-    - `excludeDirectory`
-    - `excludeNamespace` 
-    - `excludeNamespaceRegex` 
-- `$this->layersFromNamespaceRegex($regex)` Builders multiple layers; regex must return group with name 'layer', it is layer identifier for checked object.
+    - `excludePath`
+    - `excludeNameStart` 
+    - `excludeNameRegex` 
+- `$this->layersFromNameRegex($regex)` Builders multiple layers; regex must return group with name 'layer', it is layer identifier for checked object.
+- `$this->layersFromClosure($closure)` Builders multiple layers; Closure take ObjectDescription in param and must to return string (unique module id) or null.
 
 ## Asserts
 
@@ -73,7 +74,7 @@ abstract class TestCase extends BaseTestCase
 - `assertDependOn($A, $B)` Layer A must contains dependencies by layer B.
 - `assertDoesNotDependOn($A, $B)` Layer A (or layers in array A) must not contains dependencies by layer B (or layers in array B).
 
-### Methods arguments type
+### Methods arguments and return type
 
 - `assertIncomingsFrom($A, $B)` Layer A must contains arguments with types from Layer B
 - `assertIncomingsNotFrom($A, $B)` Layer A must not contains arguments with types from Layer B
@@ -85,6 +86,6 @@ abstract class TestCase extends BaseTestCase
 - [PHP Architecture Tester](https://github.com/carlosas/phpat)
 
 #### Advantages
-- Dynamic creation of layers by regular expression
+- Dynamic creation of layers by regular expression (not need declare each module)
 - Run along with the rest of tests from [phpunit](https://github.com/sebastianbergmann/phpunit)
-- Asserts to method arguments (for check dependent injection)
+- Asserts to method arguments and return types (for check dependent injection)
