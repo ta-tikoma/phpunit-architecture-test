@@ -10,6 +10,7 @@ use PhpParser\NodeVisitor\NameResolver;
 use PhpParser\Node;
 use PhpParser\Parser;
 use PhpParser\ParserFactory;
+use ReflectionClass;
 
 class ObjectDescriptionBase
 {
@@ -18,6 +19,8 @@ class ObjectDescriptionBase
     public string $name;
 
     public array $stmts;
+
+    public ReflectionClass $reflectionClass;
 
     protected static ?Parser $parser = null;
 
@@ -70,9 +73,10 @@ class ObjectDescriptionBase
         }
 
         $description = new static();
-        $description->path = $path;
-        $description->name = $object->namespacedName->toString();
-        $description->stmts = $stmts;
+        $description->path            = $path;
+        $description->name            = $object->namespacedName->toString();
+        $description->stmts           = $stmts;
+        $description->reflectionClass = new ReflectionClass($description->name);
 
         return $description;
     }

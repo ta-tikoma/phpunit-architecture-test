@@ -6,6 +6,9 @@ namespace PHPUnit\Architecture\Elements;
 
 use PhpParser\Node;
 
+/**
+ * Method description
+ */
 final class MethodDescription
 {
     public string $name;

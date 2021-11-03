@@ -14,7 +14,7 @@ use PHPUnit\Architecture\Elements\MethodDescription;
 class ObjectMethodsDescription extends ObjectDependenciesDescription
 {
     /**
-     * Names of uses objects
+     * Object methods
      *
      * @var MethodDescription[]
      */

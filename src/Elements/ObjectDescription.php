@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace PHPUnit\Architecture\Elements;
 
-use PHPUnit\Architecture\Asserts\Methods\ObjectMethodsDescription;
+use PHPUnit\Architecture\Asserts\Properties\ObjectPropertiesDescription;
 
 /**
  * Open to extends
  */
-class ObjectDescription extends ObjectMethodsDescription
+class ObjectDescription extends ObjectPropertiesDescription
 {
 }

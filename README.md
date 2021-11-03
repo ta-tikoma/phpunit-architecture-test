@@ -74,12 +74,16 @@ abstract class TestCase extends BaseTestCase
 - `assertDependOn($A, $B)` Layer A must contains dependencies by layer B.
 - `assertDoesNotDependOn($A, $B)` Layer A (or layers in array A) must not contains dependencies by layer B (or layers in array B).
 
-### Methods arguments and return type
+### Methods 
 
 - `assertIncomingsFrom($A, $B)` Layer A must contains arguments with types from Layer B
 - `assertIncomingsNotFrom($A, $B)` Layer A must not contains arguments with types from Layer B
 - `assertOutgoingFrom($A, $B)` Layer A must contains methods return types from Layer B
 - `assertOutgoingNotFrom($A, $B)` Layer A must not contains methods return types from Layer B
+
+### Properties
+
+- `assertHasNotPublicProperties($A)` Objects in Layer A must not contains public properties
 
 ## Alternatives
 - [Deptrac](https://github.com/qossmic/deptrac)
@@ -89,3 +93,4 @@ abstract class TestCase extends BaseTestCase
 - Dynamic creation of layers by regular expression (not need declare each module)
 - Run along with the rest of tests from [phpunit](https://github.com/sebastianbergmann/phpunit)
 - Asserts to method arguments and return types (for check dependent injection)
+- Asserts to properties visibility
