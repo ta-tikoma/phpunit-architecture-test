@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PHPUnit\Architecture\Elements;
 
+use PHPUnit\Architecture\Enums\Visibility;
 use ReflectionProperty;
 
 final class PropertyDescription
@@ -12,7 +13,7 @@ final class PropertyDescription
 
     public ?string $type;
 
-    public string $visibility;
+    public Visibility $visibility;
 
     public static function make(ReflectionProperty $reflectionProperty): self
     {
@@ -21,11 +22,11 @@ final class PropertyDescription
         $description->type = $reflectionProperty->getType() === null ? null : $reflectionProperty->getType()->getName();
 
         if ($reflectionProperty->isPrivate()) {
-            $description->visibility = 'private';
+            $description->visibility = Visibility::PRIVATE();
         } elseif ($reflectionProperty->isProtected()) {
-            $description->visibility = 'protected';
+            $description->visibility = Visibility::PROTECTED();
         } else {
-            $description->visibility = 'public';
+            $description->visibility = Visibility::PUBLIC();
         }
 
         return $description;

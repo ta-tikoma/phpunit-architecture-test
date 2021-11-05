@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PHPUnit\Architecture\Asserts\Properties;
 
 use PHPUnit\Architecture\Elements\Layer;
+use PHPUnit\Architecture\Enums\Visibility;
 use PHPUnit\Architecture\Storage\ObjectsStorage;
 
 /**
@@ -29,7 +30,7 @@ trait PropertiesAsserts
             foreach ($layer->objectsName as $name) {
                 $object = ObjectsStorage::getObjectMap()[$name];
                 foreach ($object->properties as $property) {
-                    if ($property->visibility === 'public') {
+                    if ($property->visibility->equals(Visibility::PUBLIC())) {
                         $result[] = "$name : {$property->name} <- public";
                     }
                 }

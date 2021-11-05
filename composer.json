@@ -20,7 +20,8 @@
     "require": {
         "phpunit/phpunit": "^9",
         "nikic/php-parser": "^4.13",
-        "symfony/finder": "^5"
+        "symfony/finder": "^5",
+        "myclabs/php-enum": "dev-master"
     },
     "autoload": {
         "psr-4": {
