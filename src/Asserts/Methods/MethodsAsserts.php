@@ -181,4 +181,33 @@ trait MethodsAsserts
 
         return $result;
     }
+
+    /**
+     * Check method's size in layer
+     *
+     * @param Layer|Layer[] $layerA
+     */
+    public function assertMethodSizeLessThan($layerA, $size): void
+    {
+        /** @var Layer[] $layers */
+        $layers = is_array($layerA) ? $layerA : [$layerA];
+
+        $result = [];
+        foreach ($layers as $layer) {
+            foreach ($layer->objectsName as $name) {
+                $object = ObjectsStorage::getObjectMap()[$name];
+                foreach ($object->methods as $method) {
+                    if ($method->size > $size) {
+                        $result[] = "$name : {$method->name} -> {$method->size} <- $size";
+                    }
+                }
+            }
+        }
+
+        self::assertEquals(
+            0,
+            count($result),
+            'Found large methods: ' . implode("\n", $result)
+        );
+    }
 }

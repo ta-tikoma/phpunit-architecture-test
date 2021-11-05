@@ -80,6 +80,7 @@ abstract class TestCase extends BaseTestCase
 - `assertIncomingsNotFrom($A, $B)` Layer A must not contains arguments with types from Layer B
 - `assertOutgoingFrom($A, $B)` Layer A must contains methods return types from Layer B
 - `assertOutgoingNotFrom($A, $B)` Layer A must not contains methods return types from Layer B
+- `assertMethodSizeLessThan($A, $SIZE)` Layer A must not contains methods with size less than SIZE
 
 ### Properties
 

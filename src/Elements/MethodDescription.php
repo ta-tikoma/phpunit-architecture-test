@@ -25,6 +25,11 @@ final class MethodDescription
      */
     public ?string $return;
 
+    /**
+     * Line count of method
+     */
+    public int $size;
+
     public static function make(Node\Stmt\ClassMethod $classMethod): self
     {
         $description = new static();
@@ -39,6 +44,7 @@ final class MethodDescription
         $description->return = method_exists($classMethod->returnType, 'toString')
             ? $classMethod->returnType->toString()
             : null;
+        $description->size = $classMethod->getEndLine() - $classMethod->getStartLine();
 
         return $description;
     }

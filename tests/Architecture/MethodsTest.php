@@ -23,4 +23,11 @@ final class MethodsTest extends TestCase
 
         $this->assertIncomingsFrom($filters, $elements);
     }
+
+    public function test_layer_method_size()
+    {
+        $filters = $this->layerFromNameStart('PHPUnit\\Architecture\\Filters');
+
+        $this->assertMethodSizeLessThan($filters, 20);
+    }
 }
