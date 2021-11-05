@@ -59,9 +59,11 @@ abstract class TestCase extends BaseTestCase
     - `includeNameStart`
     - `includeNameRegex`
     - `includeObject`
+    - `includeObjectType`
     - `excludePath`
     - `excludeNameStart` 
     - `excludeNameRegex` 
+    - `excludeObjectType` 
 - `$this->layersFromNameRegex($regex)` Builders multiple layers; regex must return group with name 'layer', it is layer identifier for checked object.
 - `$this->layersFromClosure($closure)` Builders multiple layers; Closure take ObjectDescription in param and must to return string (unique module id) or null.
 

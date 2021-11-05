@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace tests\Architecture;
 
+use PHPUnit\Architecture\Enums\ObjectType;
 use tests\TestCase;
 
 final class LayerTest extends TestCase
@@ -42,5 +43,20 @@ final class LayerTest extends TestCase
 
         $this->assertDependOn($assertTraits, $layer);
         $this->assertDoesNotDependOn($layer, $assertTraits);
+    }
+
+    public function test_layer_create_by_type()
+    {
+        $traits = $this->layer()
+            ->includeNameRegex('/^PHPUnit\\\\Architecture\\\\Asserts\\\\[^\\\\]+\\\\.+Asserts$/')
+            ->build();
+
+        $traitsCheck = $this->layer()
+            ->includeNameStart('PHPUnit\\Architecture\\Asserts')
+            ->excludeObjectType(ObjectType::_CLASS())
+            ->excludeObjectType(ObjectType::_INTERFACE())
+            ->build();
+
+        $this->assertTrue($traits->equals($traitsCheck));
     }
 }

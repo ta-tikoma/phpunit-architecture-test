@@ -8,9 +8,11 @@ use Closure;
 use PHPUnit\Architecture\Contracts\FilterContract;
 use PHPUnit\Architecture\Elements\Layer;
 use PHPUnit\Architecture\Elements\ObjectDescription;
+use PHPUnit\Architecture\Enums\ObjectType;
 use PHPUnit\Architecture\Filters\ClosureFilter;
 use PHPUnit\Architecture\Filters\NameRegexFilter;
 use PHPUnit\Architecture\Filters\NameStartFilter;
+use PHPUnit\Architecture\Filters\ObjectTypeFilter;
 use PHPUnit\Architecture\Filters\PathStartFilter;
 use PHPUnit\Architecture\Storage\ObjectsStorage;
 
@@ -118,6 +120,17 @@ final class LayerBuilder
     {
         return $this->excludeFilter(new NameStartFilter($namespace));
     }
+
+    public function includeObjectType(ObjectType $type): self
+    {
+        return $this->includeFilter(new ObjectTypeFilter($type));
+    }
+
+    public function excludeObjectType(ObjectType $type): self
+    {
+        return $this->excludeFilter(new ObjectTypeFilter($type));
+    }
+
 
     public function build(): Layer
     {

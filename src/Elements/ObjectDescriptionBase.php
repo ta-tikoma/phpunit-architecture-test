@@ -10,10 +10,13 @@ use PhpParser\NodeVisitor\NameResolver;
 use PhpParser\Node;
 use PhpParser\Parser;
 use PhpParser\ParserFactory;
+use PHPUnit\Architecture\Enums\ObjectType;
 use ReflectionClass;
 
 class ObjectDescriptionBase
 {
+    public ObjectType $type;
+
     public string $path;
 
     public string $name;
@@ -73,6 +76,15 @@ class ObjectDescriptionBase
         }
 
         $description = new static();
+
+        if ($object instanceof Node\Stmt\Class_) {
+            $description->type = ObjectType::_CLASS();
+        } elseif ($object instanceof Node\Stmt\Trait_) {
+            $description->type = ObjectType::_TRAIT();
+        } elseif ($object instanceof Node\Stmt\Interface_) {
+            $description->type = ObjectType::_INTERFACE();
+        }
+
         $description->path            = $path;
         $description->name            = $object->namespacedName->toString();
         $description->stmts           = $stmts;
