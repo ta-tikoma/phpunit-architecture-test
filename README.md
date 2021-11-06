@@ -1,6 +1,20 @@
 # PHPUnit Application Architecture Test
 
-**Idea**: write architecture tests as well as feature and unit tests
+**Idea**: write architecture tests as well as feature and unit tests. Protect your architecture code style!
+
+## Example
+
+Don't use repositories in controllers use only in services classes. Take three layers "repositories", "services", "controllers" and add asserts on dependencies.
+```php
+$controllers = $this->layerFromNameStart('App\\Controllers');
+$services = $this->layerFromNameStart('App\\Services');
+$repositories = $this->layerFromNameStart('App\\Repositories');
+
+$this->assertDoesNotDependOn($controllers, $repositories);
+$this->assertDependOn($controllers, $services);
+$this->assertDependOn($services, $repositories);
+```
+
 
 ## Installation
 
