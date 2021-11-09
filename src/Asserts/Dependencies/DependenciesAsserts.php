@@ -67,7 +67,7 @@ trait DependenciesAsserts
         $result = [];
 
         foreach ($layers as $layer) {
-            foreach ($layer->objectsName as $name) {
+            foreach ($layer as $name) {
                 $object = ObjectsStorage::getObjectMap()[$name];
                 foreach ($object->uses as $use) {
                     foreach ($layersToSearch as $layerToSearch) {
@@ -76,7 +76,7 @@ trait DependenciesAsserts
                             continue;
                         }
 
-                        foreach ($layerToSearch->objectsName as $nameToSearch) {
+                        foreach ($layerToSearch as $nameToSearch) {
                             $objectToSearch = ObjectsStorage::getObjectMap()[$nameToSearch];
                             if ($objectToSearch->name === $use) {
                                 $result[] = "$name <- $nameToSearch";

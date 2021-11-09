@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace PHPUnit\Architecture\Elements;
 
-final class Layer
+use ArrayIterator;
+use IteratorAggregate;
+
+final class Layer implements IteratorAggregate
 {
     public string $name;
 
     /**
      * @var string[]
      */
-    public array $objectsName = [];
+    private array $objectsName = [];
 
     public function __construct(
         array $objectsName
@@ -20,6 +23,11 @@ final class Layer
 
         $this->name = implode(',', $objectsName);
         $this->objectsName = $objectsName;
+    }
+
+    public function getIterator()
+    {
+        return new ArrayIterator($this->objectsName);
     }
 
     /**

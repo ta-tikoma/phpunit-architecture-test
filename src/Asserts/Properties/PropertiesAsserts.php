@@ -27,7 +27,7 @@ trait PropertiesAsserts
 
         $result = [];
         foreach ($layers as $layer) {
-            foreach ($layer->objectsName as $name) {
+            foreach ($layer as $name) {
                 $object = ObjectsStorage::getObjectMap()[$name];
                 foreach ($object->properties as $property) {
                     if ($property->visibility->equals(Visibility::PUBLIC())) {

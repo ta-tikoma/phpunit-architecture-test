@@ -70,7 +70,7 @@ trait MethodsAsserts
         $result = [];
 
         foreach ($layers as $layer) {
-            foreach ($layer->objectsName as $name) {
+            foreach ($layer as $name) {
                 $object = ObjectsStorage::getObjectMap()[$name];
                 foreach ($object->methods as $method) {
                     if (count($methods) > 0) {
@@ -86,7 +86,7 @@ trait MethodsAsserts
                                 continue;
                             }
 
-                            foreach ($layerToSearch->objectsName as $nameToSearch) {
+                            foreach ($layerToSearch as $nameToSearch) {
                                 if ($nameToSearch === $aType) {
                                     $result[] = "$name : {$method->name} -> $aName <- $nameToSearch";
                                 }
@@ -154,7 +154,7 @@ trait MethodsAsserts
         $result = [];
 
         foreach ($layers as $layer) {
-            foreach ($layer->objectsName as $name) {
+            foreach ($layer as $name) {
                 $object = ObjectsStorage::getObjectMap()[$name];
                 foreach ($object->methods as $method) {
                     if (count($methods) > 0) {
@@ -169,7 +169,7 @@ trait MethodsAsserts
                             continue;
                         }
 
-                        foreach ($layerToSearch->objectsName as $nameToSearch) {
+                        foreach ($layerToSearch as $nameToSearch) {
                             if ($nameToSearch === $method->return) {
                                 $result[] = "$name : {$method->name} -> {$method->return} <- $nameToSearch";
                             }
@@ -194,7 +194,7 @@ trait MethodsAsserts
 
         $result = [];
         foreach ($layers as $layer) {
-            foreach ($layer->objectsName as $name) {
+            foreach ($layer as $name) {
                 $object = ObjectsStorage::getObjectMap()[$name];
                 foreach ($object->methods as $method) {
                     if ($method->size > $size) {
