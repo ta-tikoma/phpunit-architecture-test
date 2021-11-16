@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPUnit\Architecture\Elements;
+namespace PHPUnit\Architecture\Asserts\Methods\Elements;
 
 use PhpParser\Node;
 

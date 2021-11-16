@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPUnit\Architecture\Elements;
+namespace PHPUnit\Architecture\Asserts\Properties\Elements;
 
 use PHPUnit\Architecture\Enums\Visibility;
 use ReflectionProperty;

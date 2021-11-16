@@ -6,7 +6,8 @@ namespace PHPUnit\Architecture\Asserts\Methods;
 
 use PhpParser\Node;
 use PHPUnit\Architecture\Asserts\Dependencies\ObjectDependenciesDescription;
-use PHPUnit\Architecture\Elements\MethodDescription;
+use PHPUnit\Architecture\Asserts\Methods\Elements\MethodDescription;
+use PHPUnit\Architecture\Asserts\Methods\Elements\ObjectMethods;
 
 /**
  * Describe object methods
@@ -15,10 +16,8 @@ class ObjectMethodsDescription extends ObjectDependenciesDescription
 {
     /**
      * Object methods
-     *
-     * @var MethodDescription[]
      */
-    public array $methods;
+    public ObjectMethods $methods;
 
     public static function make(string $path): ?self
     {
@@ -30,9 +29,12 @@ class ObjectMethodsDescription extends ObjectDependenciesDescription
 
         /** @var Node\Stmt\ClassMethod[] $methods */
         $methods = self::$nodeFinder->findInstanceOf($description->stmts, Node\Stmt\ClassMethod::class);
-        $description->methods = array_map(static function (Node\Stmt\ClassMethod $classMethod): MethodDescription {
-            return MethodDescription::make($classMethod);
-        }, $methods);
+
+        $description->methods = new ObjectMethods(
+            array_map(static function (Node\Stmt\ClassMethod $classMethod): MethodDescription {
+                return MethodDescription::make($classMethod);
+            }, $methods)
+        );
 
         return $description;
     }

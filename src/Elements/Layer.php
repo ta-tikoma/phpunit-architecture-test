@@ -12,9 +12,9 @@ final class Layer implements IteratorAggregate
     public string $name;
 
     /**
-     * @var string[]
+     * @var string[] like 'PHPUnit\Architecture\Enums\ObjectType'
      */
-    private array $objectsName = [];
+    protected array $objectsName = [];
 
     public function __construct(
         array $objectsName
