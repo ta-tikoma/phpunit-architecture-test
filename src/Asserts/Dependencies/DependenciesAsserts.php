@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace PHPUnit\Architecture\Asserts\Dependencies;
 
-use PHPUnit\Architecture\Elements\Layer;
-use PHPUnit\Architecture\Storage\ObjectsStorage;
+use PHPUnit\Architecture\Elements\Layer\Layer;
 
 /**
  * Asserts for objects dependencies
@@ -67,8 +66,7 @@ trait DependenciesAsserts
         $result = [];
 
         foreach ($layers as $layer) {
-            foreach ($layer as $name) {
-                $object = ObjectsStorage::getObjectMap()[$name];
+            foreach ($layer as $object) {
                 foreach ($object->uses as $use) {
                     foreach ($layersToSearch as $layerToSearch) {
                         // do not test layer with self
@@ -76,10 +74,9 @@ trait DependenciesAsserts
                             continue;
                         }
 
-                        foreach ($layerToSearch as $nameToSearch) {
-                            $objectToSearch = ObjectsStorage::getObjectMap()[$nameToSearch];
+                        foreach ($layerToSearch as $objectToSearch) {
                             if ($objectToSearch->name === $use) {
-                                $result[] = "$name <- $nameToSearch";
+                                $result[] = "$object->name <- $objectToSearch->name";
                             }
                         }
                     }

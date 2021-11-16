@@ -10,7 +10,7 @@ final class LayersTest extends TestCase
 {
     public function test_make_layers_and_assert_depends()
     {
-        $layers = $this->layersFromNameRegex('/^(?\'layer\'.*\\\\Architecture\\\\Builders\\\\[^\\\\]+)/m');
+        $layers = $this->layer()->splitByNameRegex('/^(?\'layer\'.*\\\\Architecture\\\\Builders\\\\[^\\\\]+)/m');
 
         $this->assertDoesNotDependOn($layers, $layers);
     }

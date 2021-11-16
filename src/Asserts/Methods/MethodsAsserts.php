@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PHPUnit\Architecture\Asserts\Methods;
 
-use PHPUnit\Architecture\Elements\Layer;
+use PHPUnit\Architecture\Elements\Layer\Layer;
 use PHPUnit\Architecture\Storage\ObjectsStorage;
 
 /**

@@ -4,67 +4,19 @@ declare(strict_types=1);
 
 namespace PHPUnit\Architecture\Builders;
 
-use Closure;
-use PHPUnit\Architecture\Elements\Layer;
+use PHPUnit\Architecture\Elements\Layer\Layer;
+use PHPUnit\Architecture\Storage\ObjectsStorage;
 
 trait BuildFromTest
 {
-    /**
-     * @param string|string[] $include start of namespace for include to layer
-     */
-    public function layerFromNameStart($include): Layer
-    {
-        $include = is_array($include) ? $include : [$include];
+    private static ?Layer $layer = null;
 
-        $builder = (new LayerBuilder);
-        foreach ($include as $start) {
-            $builder = $builder->includeNameStart($start);
+    public function layer(): Layer
+    {
+        if (self::$layer === null) {
+            self::$layer = new Layer(ObjectsStorage::getObjectMap());
         }
 
-        return $builder->build();
-    }
-
-    /**
-     * @param string|string[] $include directory for include to layer
-     */
-    public function layerFromPath($include): Layer
-    {
-        $include = is_array($include) ? $include : [$include];
-
-        $builder = (new LayerBuilder);
-        foreach ($include as $start) {
-            $builder = $builder->includePath($start);
-        }
-
-        return $builder->build();
-    }
-
-    /**
-     * Regex must contains group with name 'layer'
-     *
-     * @param string $nameRegex Example: `/^(?\'layer\'.*\\\\Architecture\\\\Builders\\\\[^\\\\]+)/m`
-     *
-     * @return Layer[]
-     */
-    public function layersFromNameRegex(string $nameRegex): array
-    {
-        return LayersBuilder::fromNameRegex($nameRegex);
-    }
-
-    /**
-     * @param Closure $closure Contract: static function (ObjectDescription $objectNames): ?string
-     * @return Layer[]
-     */
-    public function layersFromClosure(Closure $closure): array
-    {
-        return LayersBuilder::fromClosure($closure);
-    }
-
-    /**
-     * Access to layer builder
-     */
-    public function layer(): LayerBuilder
-    {
-        return new LayerBuilder;
+        return self::$layer;
     }
 }

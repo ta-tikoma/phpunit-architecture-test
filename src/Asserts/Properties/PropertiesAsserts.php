@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace PHPUnit\Architecture\Asserts\Properties;
 
-use PHPUnit\Architecture\Elements\Layer;
+use PHPUnit\Architecture\Elements\Layer\Layer;
 use PHPUnit\Architecture\Enums\Visibility;
-use PHPUnit\Architecture\Storage\ObjectsStorage;
 
 /**
  * Asserts for objects methods
@@ -18,7 +17,7 @@ trait PropertiesAsserts
     /**
      * Search public properties in layerA
      *
-     * @param Layer|Layer[] $layerA
+     * @param LayerrLayer[] $layerA
      */
     public function assertHasNotPublicProperties($layerA): void
     {
@@ -27,11 +26,10 @@ trait PropertiesAsserts
 
         $result = [];
         foreach ($layers as $layer) {
-            foreach ($layer as $name) {
-                $object = ObjectsStorage::getObjectMap()[$name];
+            foreach ($layer as $object) {
                 foreach ($object->properties as $property) {
                     if ($property->visibility->equals(Visibility::PUBLIC())) {
-                        $result[] = "$name : {$property->name} <- public";
+                        $result[] = "$object->name : {$property->name} <- public";
                     }
                 }
             }
