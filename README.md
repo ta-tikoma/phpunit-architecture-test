@@ -6,9 +6,9 @@
 
 Don't use repositories in controllers use only in services classes. Take three layers "repositories", "services", "controllers" and add asserts on dependencies.
 ```php
-$controllers = $this->layerFromNameStart('App\\Controllers');
-$services = $this->layerFromNameStart('App\\Services');
-$repositories = $this->layerFromNameStart('App\\Repositories');
+$controllers = $this->layer()->filterByNameStart('App\\Controllers');
+$services = $this->layer()->filterByNameStart('App\\Services');
+$repositories = $this->layer()->filterByNameStart('App\\Repositories');
 
 $this->assertDoesNotDependOn($controllers, $repositories);
 $this->assertDependOn($controllers, $services);
@@ -42,8 +42,8 @@ abstract class TestCase extends BaseTestCase
 ```php
     public function test_make_layer_from_namespace()
     {
-        $app = $this->layerFromNameStart('PHPUnit\\Architecture');
-        $tests = $this->layerFromNameStart('tests');
+        $app = $this->layer()->filterByNameStart('PHPUnit\\Architecture');
+        $tests = $this->layer()->filterByNameStart('tests');
 
         $this->assertDoesNotDependOn($app, $tests);
         $this->assertDependOn($tests, $app);
@@ -66,20 +66,16 @@ abstract class TestCase extends BaseTestCase
 
 ## How to build Layer
 
-- `$this->layerFromNameStart($nameStart)` All object which names start from `$nameStart` fall in layer.
-- `$this->layerFromPath($path)` All object which path start from `$path` fall in layer.
-- `$this->layer()-> ... ->build()` Custom layer. You can use:
-    - `includePath`
-    - `includeNameStart`
-    - `includeNameRegex`
-    - `includeObject`
-    - `includeObjectType`
-    - `excludePath`
-    - `excludeNameStart` 
-    - `excludeNameRegex` 
-    - `excludeObjectType` 
-- `$this->layersFromNameRegex($regex)` Builders multiple layers; regex must return group with name 'layer', it is layer identifier for checked object.
-- `$this->layersFromClosure($closure)` Builders multiple layers; Closure take ObjectDescription in param and must to return string (unique module id) or null.
+- `$this->layer()` take access to layer with all objects and filter for create your layer:
+    - `->filter($closure)` by closure
+    - `->filterByPathStart($path)` by object path start
+    - `->filterByNameStart($name)` by object name start
+    - `->filterByNameRegex($name)` by object name regex
+    - `->filterByType($name)` by object type
+- you can create multiple layers with split:
+    - `->split($closure)` by closure
+    - `->splitByNameRegex($closure)` by object name
+
 
 ## Asserts
 
