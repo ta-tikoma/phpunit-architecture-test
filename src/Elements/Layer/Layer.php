@@ -104,12 +104,13 @@ final class Layer implements IteratorAggregate
     public function essence(string $path): array
     {
         return $this->essenceRecursion(
+            '',
             explode('.', $path),
             $this->objects
         );
     }
 
-    private function essenceRecursion(array $parts, array $list): array
+    private function essenceRecursion(string $path, array $parts, $list)
     {
         $part = array_shift($parts);
         if ($part === null) {
@@ -117,10 +118,19 @@ final class Layer implements IteratorAggregate
         }
 
         $result = [];
-        foreach ($list as $item) {
-            $result[] = $item->$part;
+
+        if ($part === '*') {
+            foreach ($list as $key => $item) {
+                $result = array_merge($result, $this->essenceRecursion("$path.$key", $parts, $item));
+            }
+
+            return $result;
         }
 
-        return $this->essenceRecursion($parts, $result);
+        foreach ($list as $item) {
+            $result["$path.$item"] = $item->$part;
+        }
+
+        return $this->essenceRecursion($path, $parts, $result);
     }
 }

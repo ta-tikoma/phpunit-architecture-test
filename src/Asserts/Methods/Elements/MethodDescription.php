@@ -48,4 +48,9 @@ final class MethodDescription
 
         return $description;
     }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 }
