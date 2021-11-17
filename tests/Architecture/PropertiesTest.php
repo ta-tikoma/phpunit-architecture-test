@@ -10,7 +10,7 @@ final class PropertiesTest extends TestCase
 {
     public function test_layer_method_incoming_arguments_not_from()
     {
-        $builders = $this->layer()->filterByNameStart('PHPUnit\\Architecture\\Builders');
+        $builders = $this->layer()->leaveByNameStart('PHPUnit\\Architecture\\Builders');
 
         $this->assertHasNotPublicProperties($builders);
     }

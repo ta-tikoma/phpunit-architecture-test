@@ -10,8 +10,8 @@ final class MethodsTest extends TestCase
 {
     public function test_layer_method_incoming_arguments_not_from()
     {
-        $tests = $this->layer()->filterByNameStart('tests');
-        $filters = $this->layer()->filterByNameStart('PHPUnit\\Architecture\\Filters');
+        $tests = $this->layer()->leaveByNameStart('tests');
+        $filters = $this->layer()->leaveByNameStart('PHPUnit\\Architecture\\Filters');
 
         $this->assertIncomingsNotFrom($filters, $tests);
     }
@@ -26,7 +26,7 @@ final class MethodsTest extends TestCase
 
     public function test_layer_method_size()
     {
-        $filters = $this->layer()->filterByNameStart('PHPUnit\\Architecture\\Filters');
+        $filters = $this->layer()->leaveByNameStart('PHPUnit\\Architecture\\Filters');
 
         $this->assertMethodSizeLessThan($filters, 20);
     }
