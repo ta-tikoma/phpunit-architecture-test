@@ -17,7 +17,7 @@ trait PropertiesAsserts
     /**
      * Search public properties in layerA
      *
-     * @param LayerrLayer[] $layerA
+     * @param Layer|Layer[] $layerA
      */
     public function assertHasNotPublicProperties($layerA): void
     {

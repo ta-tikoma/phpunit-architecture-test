@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace PHPUnit\Architecture\Asserts\Methods;
 
 use PhpParser\Node;
-use PHPUnit\Architecture\Asserts\Dependencies\ObjectDependenciesDescription;
+use PHPUnit\Architecture\Asserts\Inheritance\ObjectInheritanceDescription;
 use PHPUnit\Architecture\Asserts\Methods\Elements\MethodDescription;
 use PHPUnit\Architecture\Asserts\Methods\Elements\ObjectMethods;
 
 /**
  * Describe object methods
  */
-class ObjectMethodsDescription extends ObjectDependenciesDescription
+class ObjectMethodsDescription extends ObjectInheritanceDescription
 {
     /**
      * Object methods
