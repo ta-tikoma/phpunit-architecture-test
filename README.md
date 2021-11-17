@@ -67,11 +67,18 @@ abstract class TestCase extends BaseTestCase
 ## How to build Layer
 
 - `$this->layer()` take access to layer with all objects and filter for create your layer:
-    - `->filter($closure)` by closure
-    - `->filterByPathStart($path)` by object path start
-    - `->filterByNameStart($name)` by object name start
-    - `->filterByNameRegex($name)` by object name regex
-    - `->filterByType($name)` by object type
+    - leave objects in layer only:
+        - `->leave($closure)` by closure
+        - `->leaveByPathStart($path)` by object path start
+        - `->leaveByNameStart($name)` by object name start
+        - `->leaveByNameRegex($name)` by object name regex
+        - `->leaveByType($name)` by object type
+    - remove objects from layer:
+        - `->exclude($closure)` by closure
+        - `->excludeByPathStart($path)` by object path start
+        - `->excludeByNameStart($name)` by object name start
+        - `->excludeByNameRegex($name)` by object name regex
+        - `->excludeByType($name)` by object type
 - you can create multiple layers with split:
     - `->split($closure)` by closure
     - `->splitByNameRegex($closure)` by object name
@@ -101,6 +108,7 @@ abstract class TestCase extends BaseTestCase
 ## Alternatives
 - [Deptrac](https://github.com/qossmic/deptrac)
 - [PHP Architecture Tester](https://github.com/carlosas/phpat)
+- [PHPArch](https://github.com/j6s/phparch)
 
 #### Advantages
 - Dynamic creation of layers by regular expression (not need declare each module)

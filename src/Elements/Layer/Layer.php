@@ -11,7 +11,8 @@ use PHPUnit\Architecture\Elements\ObjectDescription;
 
 final class Layer implements IteratorAggregate
 {
-    use LayerFilters;
+    use LayerLeave;
+    use LayerExclude;
     use LayerSplit;
 
     protected ?string $name = null;
@@ -57,9 +58,19 @@ final class Layer implements IteratorAggregate
     /**
      * @param Closure $closure static function(ObjectDescription $objectDescription): bool
      */
-    public function filter(Closure $closure): self
+    public function leave(Closure $closure): self
     {
         return new Layer(array_filter($this->objects, $closure));
+    }
+
+    /**
+     * @param Closure $closure static function(ObjectDescription $objectDescription): bool
+     */
+    public function exclude(Closure $closure): self
+    {
+        return new Layer(array_filter($this->objects, static function ($item) use ($closure): bool {
+            return !$closure($item);
+        }));
     }
 
     /**
@@ -88,5 +99,28 @@ final class Layer implements IteratorAggregate
         return array_map(static function (array $objects): Layer {
             return new Layer($objects);
         }, $objects);
+    }
+
+    public function essence(string $path): array
+    {
+        return $this->essenceRecursion(
+            explode('.', $path),
+            $this->objects
+        );
+    }
+
+    private function essenceRecursion(array $parts, array $list): array
+    {
+        $part = array_shift($parts);
+        if ($part === null) {
+            return $list;
+        }
+
+        $result = [];
+        foreach ($list as $item) {
+            $result[] = $item->$part;
+        }
+
+        return $this->essenceRecursion($parts, $result);
     }
 }
