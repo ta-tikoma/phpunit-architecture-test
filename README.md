@@ -6,9 +6,9 @@
 
 Don't use repositories in controllers use only in services classes. Take three layers "repositories", "services", "controllers" and add asserts on dependencies.
 ```php
-$controllers  = $this->layer()->filterByNameStart('App\\Controllers');
-$services     = $this->layer()->filterByNameStart('App\\Services');
-$repositories = $this->layer()->filterByNameStart('App\\Repositories');
+$controllers  = $this->layer()->leaveByNameStart('App\\Controllers');
+$services     = $this->layer()->leaveByNameStart('App\\Services');
+$repositories = $this->layer()->leaveByNameStart('App\\Repositories');
 
 $this->assertDoesNotDependOn($controllers, $repositories);
 $this->assertDependOn($controllers, $services);
@@ -42,8 +42,8 @@ abstract class TestCase extends BaseTestCase
 ```php
     public function test_make_layer_from_namespace()
     {
-        $app = $this->layer()->filterByNameStart('PHPUnit\\Architecture');
-        $tests = $this->layer()->filterByNameStart('tests');
+        $app = $this->layer()->leaveByNameStart('PHPUnit\\Architecture');
+        $tests = $this->layer()->leaveByNameStart('tests');
 
         $this->assertDoesNotDependOn($app, $tests);
         $this->assertDependOn($tests, $app);
