@@ -105,6 +105,14 @@ abstract class TestCase extends BaseTestCase
 
 - `assertHasNotPublicProperties($A)` Objects in Layer A must not contains public properties
 
+### Essence
+
+You can use `$layer->essence($path)` method for collect data from layer. For example get visibility of all properties in layer: `$visibilities = $layer->essence('properties.*.visibility');` .
+
+- `assertEach($list, $check, $message)` - each item of list must passed tested by $check-function
+- `assertNotOne($list, $check, $message)` - not one item of list must not passed tested by $check-function
+- `assertAny($list, $check, $message)` - one or more item of list must not passed tested by $check-function
+
 ## Alternatives
 - [Deptrac](https://github.com/qossmic/deptrac)
 - [PHP Architecture Tester](https://github.com/carlosas/phpat)
