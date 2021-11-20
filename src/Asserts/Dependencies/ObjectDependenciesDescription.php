@@ -75,7 +75,6 @@ class ObjectDependenciesDescription extends ObjectDescriptionBase
             return $_result;
         }
 
-        $type = substr((string) $type, 1);
-        return $this->uses->getByName($type) ?? $type;
+        return $this->uses->getByName((string) $type) ?? $type;
     }
 }

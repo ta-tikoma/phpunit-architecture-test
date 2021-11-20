@@ -31,9 +31,9 @@ final class ObjectUses implements IteratorAggregate
 
     public function getByName(string $name): ?string
     {
+        $length = strlen($name);
         foreach ($this as $use) {
-            $parts = explode('\\', $use);
-            if (end($parts) === $name) {
+            if (substr($use, -$length, $length) === $name) {
                 return $use;
             }
         }
