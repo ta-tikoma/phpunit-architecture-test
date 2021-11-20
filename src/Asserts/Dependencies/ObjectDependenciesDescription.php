@@ -8,6 +8,9 @@ use PhpParser\Node;
 use PHPUnit\Architecture\Asserts\Dependencies\Elements\ObjectUses;
 use PHPUnit\Architecture\Elements\ObjectDescriptionBase;
 use PHPUnit\Architecture\Services\ServiceContainer;
+use phpDocumentor\Reflection\Type;
+use phpDocumentor\Reflection\Types\AggregatedType;
+use phpDocumentor\Reflection\Types\Array_;
 
 /**
  * Describe object dependencies
@@ -40,5 +43,39 @@ class ObjectDependenciesDescription extends ObjectDescriptionBase
         );
 
         return $description;
+    }
+
+    public function getDocBlockTypeWithNamespace(
+        Type $type
+    ) {
+        $result = [];
+        if ($type instanceof AggregatedType) {
+            foreach ($type as $_type) {
+                /** @var Type $_type */
+                $result[] = $this->getDocBlockTypeWithNamespace($_type);
+            }
+        }
+
+        if ($type instanceof Array_) {
+            $result[] = $this->getDocBlockTypeWithNamespace($type->getKeyType());
+            $result[] = $this->getDocBlockTypeWithNamespace($type->getValueType());
+        }
+
+        // @todo
+        if (count($result) !== 0) {
+            $_result = [];
+            foreach ($result as $item) {
+                if (is_array($item)) {
+                    $_result = array_merge($_result, $item);
+                } else {
+                    $_result[] = $item;
+                }
+            }
+
+            return $_result;
+        }
+
+        $type = substr((string) $type, 1);
+        return $this->uses->getByName($type) ?? $type;
     }
 }

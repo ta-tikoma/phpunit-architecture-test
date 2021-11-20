@@ -4,22 +4,30 @@ declare(strict_types=1);
 
 namespace PHPUnit\Architecture\Asserts\Properties\Elements;
 
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
+use PHPUnit\Architecture\Asserts\Properties\ObjectPropertiesDescription;
 use PHPUnit\Architecture\Enums\Visibility;
+use PHPUnit\Architecture\Services\ServiceContainer;
 use ReflectionProperty;
 
 final class PropertyDescription
 {
     public string $name;
 
-    public ?string $type;
+    /**
+     * @var null|string|string[]
+     */
+    public $type;
 
     public Visibility $visibility;
 
-    public static function make(ReflectionProperty $reflectionProperty): self
-    {
+    public static function make(
+        ObjectPropertiesDescription $objectPropertiesDescription,
+        ReflectionProperty $reflectionProperty
+    ): self {
         $description = new static;
         $description->name = $reflectionProperty->getName();
-        $description->type = $reflectionProperty->getType() === null ? null : $reflectionProperty->getType()->getName();
+        $description->type = self::getPropertyType($objectPropertiesDescription, $reflectionProperty);
 
         if ($reflectionProperty->isPrivate()) {
             $description->visibility = Visibility::PRIVATE();
@@ -31,6 +39,25 @@ final class PropertyDescription
 
         return $description;
     }
+
+    private static function getPropertyType(
+        ObjectPropertiesDescription $objectPropertiesDescription,
+        ReflectionProperty $reflectionProperty
+    ) {
+        if ($reflectionProperty->getType() !== null) {
+            return $reflectionProperty->getType()->getName();
+        }
+
+        $docBlock = ServiceContainer::$docBlockFactory->create((string) ($reflectionProperty->getDocComment() ?? '/** */'));
+        /** @var Var_[] $tags */
+        $tags = $docBlock->getTagsWithTypeByName('var');
+        if ($tag = array_shift($tags)) {
+            return $objectPropertiesDescription->getDocBlockTypeWithNamespace($tag->getType());
+        }
+
+        return null;
+    }
+
 
     public function __toString()
     {

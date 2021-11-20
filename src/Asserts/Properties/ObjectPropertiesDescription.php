@@ -28,8 +28,8 @@ class ObjectPropertiesDescription extends ObjectMethodsDescription
         }
 
         $description->properties = new ObjectProperties(
-            array_map(static function (ReflectionProperty $reflectionProperty): PropertyDescription {
-                return PropertyDescription::make($reflectionProperty);
+            array_map(static function (ReflectionProperty $reflectionProperty) use ($description): PropertyDescription {
+                return PropertyDescription::make($description, $reflectionProperty);
             }, $description->reflectionClass->getProperties())
         );
 

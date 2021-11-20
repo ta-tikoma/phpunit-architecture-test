@@ -5,13 +5,8 @@ declare(strict_types=1);
 namespace PHPUnit\Architecture\Asserts\Methods\Elements;
 
 use phpDocumentor\Reflection\DocBlock;
-use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\Tags\Param;
 use phpDocumentor\Reflection\DocBlock\Tags\Return_;
-use phpDocumentor\Reflection\Type;
-use phpDocumentor\Reflection\Types\AggregatedType;
-use phpDocumentor\Reflection\Types\Array_;
-use phpDocumentor\Reflection\Types\Object_;
 use PhpParser\Node;
 use PHPUnit\Architecture\Asserts\Methods\ObjectMethodsDescription;
 use PHPUnit\Architecture\Services\ServiceContainer;
@@ -54,41 +49,6 @@ final class MethodDescription
         return $description;
     }
 
-    private static function getDocBlockTypeWithNamespace(
-        ObjectMethodsDescription $objectMethodsDescription,
-        Type $type
-    ) {
-        $result = [];
-        if ($type instanceof AggregatedType) {
-            foreach ($type as $_type) {
-                /** @var Type $_type */
-                $result[] = self::getDocBlockTypeWithNamespace($objectMethodsDescription, $_type);
-            }
-        }
-
-        if ($type instanceof Array_) {
-            $result[] = self::getDocBlockTypeWithNamespace($objectMethodsDescription, $type->getKeyType());
-            $result[] = self::getDocBlockTypeWithNamespace($objectMethodsDescription, $type->getValueType());
-        }
-
-        // @todo
-        if (count($result) !== 0) {
-            $_result = [];
-            foreach ($result as $item) {
-                if (is_array($item)) {
-                    $_result = array_merge($_result, $item);
-                } else {
-                    $_result[] = $item;
-                }
-            }
-
-            return $_result;
-        }
-
-        $type = substr((string) $type, 1);
-        return $objectMethodsDescription->uses->getByName($type) ?? $type;
-    }
-
     private static function getArgs(
         ObjectMethodsDescription $objectMethodsDescription,
         Node\Stmt\ClassMethod $classMethod,
@@ -104,7 +64,7 @@ final class MethodDescription
             if ($type === null) {
                 foreach ($tags as $tag) {
                     if ($tag->getVariableName() === $name) {
-                        $type = self::getDocBlockTypeWithNamespace($objectMethodsDescription, $tag->getType());
+                        $type = $objectMethodsDescription->getDocBlockTypeWithNamespace($tag->getType());
                         break;
                     }
                 }
@@ -126,7 +86,7 @@ final class MethodDescription
         /** @var Return_[] $tags */
         $tags = $docBlock->getTagsWithTypeByName('return');
         if ($tag = array_shift($tags)) {
-            return self::getDocBlockTypeWithNamespace($objectMethodsDescription, $tag->getType());
+            return $objectMethodsDescription->getDocBlockTypeWithNamespace($tag->getType());
         }
 
         return null;
