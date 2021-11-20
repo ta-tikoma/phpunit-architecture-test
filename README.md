@@ -6,8 +6,8 @@
 
 Don't use repositories in controllers use only in services classes. Take three layers "repositories", "services", "controllers" and add asserts on dependencies.
 ```php
-$controllers = $this->layer()->filterByNameStart('App\\Controllers');
-$services = $this->layer()->filterByNameStart('App\\Services');
+$controllers  = $this->layer()->filterByNameStart('App\\Controllers');
+$services     = $this->layer()->filterByNameStart('App\\Services');
 $repositories = $this->layer()->filterByNameStart('App\\Repositories');
 
 $this->assertDoesNotDependOn($controllers, $repositories);

@@ -10,17 +10,11 @@ use PHPUnit\Architecture\Services\ServiceContainer;
 final class ObjectsStorage
 {
     /**
-     * @var ObjectDescription[]
+     * @return ObjectDescription[]
      */
-    private static $objectMap;
-
-    private static function init(): void
+    public static function getObjectMap(): array
     {
-        if (self::$objectMap !== null) {
-            return;
-        }
-
-        self::$objectMap = [];
+        $objectMap = [];
 
         foreach (Filesystem::files() as $path) {
             /** @var ObjectDescription $description */
@@ -32,17 +26,9 @@ final class ObjectsStorage
             // save memory
             $description->stmts = [];
 
-            self::$objectMap[$description->name] = $description;
+            $objectMap[$description->name] = $description;
         }
-    }
 
-    /**
-     * @return ObjectDescription[]
-     */
-    public static function getObjectMap(): array
-    {
-        self::init();
-
-        return self::$objectMap;
+        return $objectMap;
     }
 }

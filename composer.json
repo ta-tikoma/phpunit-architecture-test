@@ -21,7 +21,8 @@
         "phpunit/phpunit": "^9",
         "nikic/php-parser": "^4.13",
         "symfony/finder": "^5",
-        "myclabs/php-enum": "dev-master"
+        "myclabs/php-enum": "dev-master",
+        "phpdocumentor/reflection-docblock": "5.x-dev"
     },
     "autoload": {
         "psr-4": {
