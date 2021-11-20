@@ -32,8 +32,8 @@ class ObjectMethodsDescription extends ObjectInheritanceDescription
         $methods = ServiceContainer::$nodeFinder->findInstanceOf($description->stmts, Node\Stmt\ClassMethod::class);
 
         $description->methods = new ObjectMethods(
-            array_map(static function (Node\Stmt\ClassMethod $classMethod): MethodDescription {
-                return MethodDescription::make($classMethod);
+            array_map(static function (Node\Stmt\ClassMethod $classMethod) use ($description): MethodDescription {
+                return MethodDescription::make($description, $classMethod);
             }, $methods)
         );
 

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PHPUnit\Architecture\Asserts\Methods;
 
 use PHPUnit\Architecture\Elements\Layer\Layer;
-use PHPUnit\Architecture\Storage\ObjectsStorage;
 
 /**
  * Asserts for objects methods
@@ -70,8 +69,7 @@ trait MethodsAsserts
         $result = [];
 
         foreach ($layers as $layer) {
-            foreach ($layer as $name) {
-                $object = ObjectsStorage::getObjectMap()[$name];
+            foreach ($layer as $object) {
                 foreach ($object->methods as $method) {
                     if (count($methods) > 0) {
                         if (!in_array($method->name, $methods)) {
@@ -80,15 +78,18 @@ trait MethodsAsserts
                     }
 
                     foreach ($method->args as list($aType, $aName)) {
-                        foreach ($layersToSearch as $layerToSearch) {
-                            // do not test layer with self
-                            if ($layer->equals($layerToSearch)) {
-                                continue;
-                            }
+                        $types = is_array($aType) ? $aType : [$aType];
+                        foreach ($types as $type) {
+                            foreach ($layersToSearch as $layerToSearch) {
+                                // do not test layer with self
+                                if ($layer->equals($layerToSearch)) {
+                                    continue;
+                                }
 
-                            foreach ($layerToSearch as $nameToSearch) {
-                                if ($nameToSearch === $aType) {
-                                    $result[] = "$name : {$method->name} -> $aName <- $nameToSearch";
+                                foreach ($layerToSearch as $objectToSearch) {
+                                    if ($objectToSearch->name === $type) {
+                                        $result[] = "{$object->name}: {$method->name} -> $aName <- {$objectToSearch->name}";
+                                    }
                                 }
                             }
                         }
@@ -154,8 +155,7 @@ trait MethodsAsserts
         $result = [];
 
         foreach ($layers as $layer) {
-            foreach ($layer as $name) {
-                $object = ObjectsStorage::getObjectMap()[$name];
+            foreach ($layer as $object) {
                 foreach ($object->methods as $method) {
                     if (count($methods) > 0) {
                         if (!in_array($method->name, $methods)) {
@@ -169,9 +169,9 @@ trait MethodsAsserts
                             continue;
                         }
 
-                        foreach ($layerToSearch as $nameToSearch) {
-                            if ($nameToSearch === $method->return) {
-                                $result[] = "$name : {$method->name} -> {$method->return} <- $nameToSearch";
+                        foreach ($layerToSearch as $objectToSearch) {
+                            if ($objectToSearch->name === $method->return) {
+                                $result[] = "{$object->name}: {$method->name} -> {$method->return} <- {$objectToSearch->name}";
                             }
                         }
                     }
@@ -194,11 +194,10 @@ trait MethodsAsserts
 
         $result = [];
         foreach ($layers as $layer) {
-            foreach ($layer as $name) {
-                $object = ObjectsStorage::getObjectMap()[$name];
+            foreach ($layer as $object) {
                 foreach ($object->methods as $method) {
                     if ($method->size > $size) {
-                        $result[] = "$name : {$method->name} -> {$method->size} <- $size";
+                        $result[] = "{$object->name}: {$method->name} -> {$method->size} <- $size";
                     }
                 }
             }

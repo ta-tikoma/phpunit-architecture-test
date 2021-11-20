@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace tests\Architecture;
 
+use PHPUnit\Architecture\Elements\Layer\Layer;
+use PHPUnit\Architecture\Enums\ObjectType;
 use tests\TestCase;
 
 final class MethodsTest extends TestCase
@@ -16,13 +18,18 @@ final class MethodsTest extends TestCase
         $this->assertIncomingsNotFrom($filters, $tests);
     }
 
-    // public function test_layer_method_incoming_arguments_from()
-    // {
-    //     $elements = $this->layer()->filterByNameStart('PHPUnit\\Architecture\\Elements');
-    //     $filters = $this->layer()->filterByNameStart('PHPUnit\\Architecture\\Filters');
-    //
-    //     $this->assertIncomingsFrom($filters, $elements);
-    // }
+    public function test_layer_method_incoming_arguments_from()
+    {
+        $assertMethods = $this->layer()
+            ->leaveByNameStart('PHPUnit\\Architecture\\Asserts')
+            ->leaveByType(ObjectType::_TRAIT());
+
+        $layerClass = $this->layer()
+            ->leaveByNameStart(Layer::class)
+            ->leaveByType(ObjectType::_CLASS());
+
+        $this->assertIncomingsFrom($assertMethods, $layerClass);
+    }
 
     public function test_layer_method_size()
     {

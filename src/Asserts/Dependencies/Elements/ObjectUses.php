@@ -28,4 +28,16 @@ final class ObjectUses implements IteratorAggregate
     {
         return new ArrayIterator($this->uses);
     }
+
+    public function getByName(string $name): ?string
+    {
+        foreach ($this as $use) {
+            $parts = explode('\\', $use);
+            if (end($parts) === $name) {
+                return $use;
+            }
+        }
+
+        return null;
+    }
 }

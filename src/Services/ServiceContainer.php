@@ -31,7 +31,10 @@ final class ServiceContainer
 
     public static NodeFinder $nodeFinder;
 
-    public static function init()
+    /**
+     * @param Finder $finder
+     */
+    public static function init(): void
     {
         self::$finder = Finder::create()
             ->files()
