@@ -7,6 +7,7 @@ namespace PHPUnit\Architecture\Asserts\Dependencies;
 use PhpParser\Node;
 use PHPUnit\Architecture\Asserts\Dependencies\Elements\ObjectUses;
 use PHPUnit\Architecture\Elements\ObjectDescriptionBase;
+use PHPUnit\Architecture\Services\ServiceContainer;
 
 /**
  * Describe object dependencies
@@ -27,7 +28,7 @@ class ObjectDependenciesDescription extends ObjectDescriptionBase
         }
 
         /** @var Node\Stmt\UseUse[] $useUses */
-        $useUses = self::$nodeFinder->findInstanceOf($description->stmts, Node\Stmt\UseUse::class);
+        $useUses = ServiceContainer::$nodeFinder->findInstanceOf($description->stmts, Node\Stmt\UseUse::class);
 
         $description->uses = new ObjectUses(
             array_map(

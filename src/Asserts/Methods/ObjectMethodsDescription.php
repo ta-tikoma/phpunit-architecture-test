@@ -8,6 +8,7 @@ use PhpParser\Node;
 use PHPUnit\Architecture\Asserts\Inheritance\ObjectInheritanceDescription;
 use PHPUnit\Architecture\Asserts\Methods\Elements\MethodDescription;
 use PHPUnit\Architecture\Asserts\Methods\Elements\ObjectMethods;
+use PHPUnit\Architecture\Services\ServiceContainer;
 
 /**
  * Describe object methods
@@ -28,7 +29,7 @@ class ObjectMethodsDescription extends ObjectInheritanceDescription
         }
 
         /** @var Node\Stmt\ClassMethod[] $methods */
-        $methods = self::$nodeFinder->findInstanceOf($description->stmts, Node\Stmt\ClassMethod::class);
+        $methods = ServiceContainer::$nodeFinder->findInstanceOf($description->stmts, Node\Stmt\ClassMethod::class);
 
         $description->methods = new ObjectMethods(
             array_map(static function (Node\Stmt\ClassMethod $classMethod): MethodDescription {

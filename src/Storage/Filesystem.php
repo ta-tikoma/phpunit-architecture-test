@@ -6,7 +6,6 @@ namespace PHPUnit\Architecture\Storage;
 
 use PHPUnit\Architecture\Services\ServiceContainer;
 use SplFileInfo;
-use Symfony\Component\Finder\Finder;
 
 final class Filesystem
 {
@@ -24,12 +23,7 @@ final class Filesystem
     public static function files()
     {
         /** @var SplFileInfo[] $paths */
-        $paths = ServiceContainer::$finder ?? Finder::create()
-            ->files()
-            ->followLinks()
-            ->exclude('vendor')
-            ->name('/\.php$/')
-            ->in(Filesystem::getBaseDir());
+        $paths = ServiceContainer::$finder;
 
         foreach ($paths as $path) {
             if ($path->isFile()) {
