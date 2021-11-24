@@ -27,8 +27,10 @@ final class MethodDescription
 
     /**
      * Return type
+     *
+     * @var string|array|null
      */
-    public ?string $return;
+    public $return;
 
     /**
      * Line count of method
@@ -78,7 +80,7 @@ final class MethodDescription
         ObjectMethodsDescription $objectMethodsDescription,
         Node\Stmt\ClassMethod $classMethod,
         DocBlock $docBlock
-    ): ?string {
+    ) {
         if (method_exists($classMethod->returnType, 'toString')) {
             return $classMethod->returnType->toString();
         }
