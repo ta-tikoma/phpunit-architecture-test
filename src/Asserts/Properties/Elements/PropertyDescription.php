@@ -48,7 +48,13 @@ final class PropertyDescription
             return $reflectionProperty->getType()->getName();
         }
 
-        $docBlock = ServiceContainer::$docBlockFactory->create((string) ($reflectionProperty->getDocComment() ?? '/** */'));
+
+        $docComment = $reflectionProperty->getDocComment();
+        if (empty($docComment)) {
+            return null;
+        }
+
+        $docBlock = ServiceContainer::$docBlockFactory->create($docComment);
         /** @var Var_[] $tags */
         $tags = $docBlock->getTagsWithTypeByName('var');
         if ($tag = array_shift($tags)) {

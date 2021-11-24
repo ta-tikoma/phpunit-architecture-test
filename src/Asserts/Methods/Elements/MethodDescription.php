@@ -41,7 +41,9 @@ final class MethodDescription
     {
         $description = new static();
 
-        $docBlock = ServiceContainer::$docBlockFactory->create((string) ($classMethod->getDocComment() ?? '/** */'));
+
+        $docComment = (string) $classMethod->getDocComment();
+        $docBlock = ServiceContainer::$docBlockFactory->create(empty($docComment) ? '/** */' : $docComment);
 
         $description->name = $classMethod->name->toString();
         $description->args = self::getArgs($objectMethodsDescription, $classMethod, $docBlock);
