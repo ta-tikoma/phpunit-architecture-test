@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PHPUnit\Architecture\Asserts\Properties\Elements;
 
+use Exception;
 use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 use PHPUnit\Architecture\Asserts\Properties\ObjectPropertiesDescription;
 use PHPUnit\Architecture\Enums\Visibility;
@@ -54,7 +55,13 @@ final class PropertyDescription
             return null;
         }
 
-        $docBlock = ServiceContainer::$docBlockFactory->create($docComment);
+        try {
+            $docBlock = ServiceContainer::$docBlockFactory->create($docComment);
+        } catch (Exception $e) {
+            echo "Can't parse: '$docBlock'";
+            return null;
+        }
+
         /** @var Var_[] $tags */
         $tags = $docBlock->getTagsWithTypeByName('var');
         if ($tag = array_shift($tags)) {
