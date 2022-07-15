@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PHPUnit\Architecture\Elements;
 
+use Exception;
 use PhpParser\Node;
 use PHPUnit\Architecture\Enums\ObjectType;
 use PHPUnit\Architecture\Services\ServiceContainer;
@@ -24,7 +25,12 @@ class ObjectDescriptionBase
     public static function make(string $path): ?self
     {
         $content = file_get_contents($path);
-        $ast = ServiceContainer::$parser->parse($content);
+
+        try {
+            $ast = ServiceContainer::$parser->parse($content);
+        } catch (Exception $e) {
+            echo "Path: $path Exception: {$e->getMessage()}";
+        }
 
         if ($ast === null) {
             return null;
