@@ -29,7 +29,9 @@ class ObjectDescriptionBase
         try {
             $ast = ServiceContainer::$parser->parse($content);
         } catch (Exception $e) {
-            echo "Path: $path Exception: {$e->getMessage()}";
+            if (ServiceContainer::$showException) {
+                echo "Path: $path Exception: {$e->getMessage()}";
+            }
         }
 
         if ($ast === null) {

@@ -31,6 +31,8 @@ final class ServiceContainer
 
     public static NodeFinder $nodeFinder;
 
+    public static bool $showException = false;
+
     /**
      * @param Finder $finder
      */

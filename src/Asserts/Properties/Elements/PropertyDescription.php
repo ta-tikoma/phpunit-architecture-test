@@ -58,7 +58,9 @@ final class PropertyDescription
         try {
             $docBlock = ServiceContainer::$docBlockFactory->create($docComment);
         } catch (Exception $e) {
-            echo "Can't parse: '$docComment'";
+            if (ServiceContainer::$showException) {
+                echo "Can't parse: '$docComment'";
+            }
             return null;
         }
 
