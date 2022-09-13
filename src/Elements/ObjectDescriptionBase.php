@@ -57,6 +57,10 @@ class ObjectDescriptionBase
             return null;
         }
 
+        if ($object->namespacedName === null) {
+            return null;
+        }
+
         $description = new static();
 
         if ($object instanceof Node\Stmt\Class_) {
