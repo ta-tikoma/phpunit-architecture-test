@@ -10,6 +10,7 @@ use PHPUnit\Architecture\Asserts\Properties\ObjectPropertiesDescription;
 use PHPUnit\Architecture\Enums\Visibility;
 use PHPUnit\Architecture\Services\ServiceContainer;
 use ReflectionProperty;
+use ReflectionUnionType;
 
 final class PropertyDescription
 {
@@ -46,6 +47,10 @@ final class PropertyDescription
         ReflectionProperty $reflectionProperty
     ) {
         if ($reflectionProperty->getType() !== null) {
+            if ($reflectionProperty->getType() instanceof ReflectionUnionType) {
+                return array_map(fn ($type) => $type->getName(), $reflectionProperty->getType()->getTypes());
+            }
+
             return $reflectionProperty->getType()->getName();
         }
 
