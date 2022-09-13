@@ -20,7 +20,7 @@
     "require": {
         "phpunit/phpunit": "^9",
         "nikic/php-parser": "^4.13",
-        "symfony/finder": "^5",
+        "symfony/finder": "^6",
         "myclabs/php-enum": "^1.8",
         "phpdocumentor/reflection-docblock": "5.x-dev"
     },

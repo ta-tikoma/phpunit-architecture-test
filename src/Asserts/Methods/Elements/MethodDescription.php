@@ -10,6 +10,7 @@ use phpDocumentor\Reflection\DocBlock\Tags\Return_;
 use PhpParser\Node;
 use PHPUnit\Architecture\Asserts\Methods\ObjectMethodsDescription;
 use PHPUnit\Architecture\Services\ServiceContainer;
+use stdClass;
 
 /**
  * Method description
@@ -63,7 +64,7 @@ final class MethodDescription
 
         return array_map(static function (Node\Param $param) use ($tags, $objectMethodsDescription): array {
             $name = $param->var === null ? null : $param->var->name;
-            $type = method_exists($param->type, 'toString') ? $param->type->toString() : null;
+            $type = self::tryToString($param->type);
 
             if ($type === null) {
                 foreach ($tags as $tag) {
@@ -78,13 +79,25 @@ final class MethodDescription
         }, $classMethod->params);
     }
 
+    private static function tryToString($object)
+    {
+        if ($object !== null) {
+            if (method_exists($object, 'toString')) {
+                return $object->toString();
+            }
+        }
+
+        return null;
+    }
+
     private static function getReturnType(
         ObjectMethodsDescription $objectMethodsDescription,
         Node\Stmt\ClassMethod $classMethod,
         DocBlock $docBlock
     ) {
-        if (method_exists($classMethod->returnType, 'toString')) {
-            return $classMethod->returnType->toString();
+        $type = self::tryToString($classMethod->returnType);
+        if ($type !== null) {
+            return $type;
         }
 
         /** @var Return_[] $tags */
