@@ -24,6 +24,7 @@ final class ObjectUses implements IteratorAggregate
         $this->uses = $uses;
     }
 
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new ArrayIterator($this->uses);

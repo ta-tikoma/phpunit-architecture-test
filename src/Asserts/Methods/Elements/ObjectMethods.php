@@ -24,6 +24,7 @@ final class ObjectMethods implements IteratorAggregate
         $this->methods = $methods;
     }
 
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new ArrayIterator($this->methods);
