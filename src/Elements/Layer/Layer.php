@@ -27,6 +27,7 @@ final class Layer implements IteratorAggregate
         $this->objects = $objects;
     }
 
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new ArrayIterator($this->objects);

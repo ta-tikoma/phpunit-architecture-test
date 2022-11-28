@@ -24,6 +24,7 @@ final class ObjectProperties implements IteratorAggregate
         $this->properties = $properties;
     }
 
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new ArrayIterator($this->properties);
