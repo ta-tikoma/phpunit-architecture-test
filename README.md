@@ -117,6 +117,7 @@ You can use `$layer->essence($path)` method for collect data from layer. For exa
 - [Deptrac](https://github.com/qossmic/deptrac)
 - [PHP Architecture Tester](https://github.com/carlosas/phpat)
 - [PHPArch](https://github.com/j6s/phparch)
+- [Arkitect](https://github.com/phparkitect/arkitect)
 
 #### Advantages
 - Dynamic creation of layers by regular expression (not need declare each module)
