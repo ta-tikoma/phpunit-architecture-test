@@ -46,7 +46,7 @@ class ObjectDescriptionBase
                 || $node instanceof Node\Stmt\Trait_
                 || $node instanceof Node\Stmt\Interface_
                 || $node instanceof Node\Stmt\Enum_
-                // 
+                //
             ;
         });
 
