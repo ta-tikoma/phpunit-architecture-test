@@ -45,7 +45,8 @@ class ObjectDescriptionBase
             return $node instanceof Node\Stmt\Class_
                 || $node instanceof Node\Stmt\Trait_
                 || $node instanceof Node\Stmt\Interface_
-                // 
+                || $node instanceof Node\Stmt\Enum_
+                //
             ;
         });
 
@@ -69,6 +70,8 @@ class ObjectDescriptionBase
             $description->type = ObjectType::_TRAIT();
         } elseif ($object instanceof Node\Stmt\Interface_) {
             $description->type = ObjectType::_INTERFACE();
+        } elseif ($object instanceof Node\Stmt\Enum_) {
+            $description->type = ObjectType::_ENUM();
         }
 
         $description->path            = $path;
