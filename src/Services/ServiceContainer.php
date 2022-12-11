@@ -33,9 +33,6 @@ final class ServiceContainer
 
     public static bool $showException = false;
 
-    /**
-     * @param Finder $finder
-     */
     public static function init(): void
     {
         self::$finder = Finder::create()

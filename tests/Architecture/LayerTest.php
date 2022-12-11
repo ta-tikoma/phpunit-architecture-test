@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace tests\Architecture;
 
 use PHPUnit\Architecture\Enums\ObjectType;
+use PHPUnit\Architecture\Enums\Visibility;
 use tests\TestCase;
 
 final class LayerTest extends TestCase
@@ -18,6 +19,19 @@ final class LayerTest extends TestCase
         $this->assertDependOn($tests, $app);
     }
 
+    public function test_layer_dependens_in_own_namespace()
+    {
+        $objectTypeEnum = $this->layer()->leaveByNameStart(ObjectType::class);
+        $visibilityEnum  = $this->layer()->leaveByNameStart(Visibility::class);
+
+        $this->assertDoesNotDependOn($objectTypeEnum, $visibilityEnum);
+
+        $class = $this->layer()->leaveByNameRegex('/^PHPUnit\\\\Architecture\\\\Elements\\\\Layer\\\\Layer$/');
+        $trait  = $this->layer()->leaveByNameStart('PHPUnit\\Architecture\\Elements\\Layer\\LayerLeave');
+
+        $this->assertDependOn($class, $trait);
+    }
+
     public function test_make_layers_from_namespaces()
     {
         $tests = $this->layer()->leaveByNameStart('tests');
@@ -26,7 +40,6 @@ final class LayerTest extends TestCase
         $this->assertDoesNotDependOn($app, $tests);
         $this->assertDependOn($tests, $app);
     }
-
 
     public function test_male_layer_from_namespace_regex_filter()
     {
