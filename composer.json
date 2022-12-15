@@ -22,7 +22,7 @@
         "nikic/php-parser": "^4.13",
         "symfony/finder": "^6",
         "myclabs/php-enum": "^1.8",
-        "phpdocumentor/reflection-docblock": "5.x-dev"
+        "phpdocumentor/reflection-docblock": "^5.3"
     },
     "autoload": {
         "psr-4": {
