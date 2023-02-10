@@ -42,12 +42,12 @@ final class ServiceContainer
             ->name('/\.php$/')
             ->in(Filesystem::getBaseDir());
 
-        self::$parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
+        self::$parser = (new ParserFactory())->create(ParserFactory::PREFER_PHP7);
 
-        self::$nodeTraverser = new NodeTraverser;
-        self::$nodeTraverser->addVisitor(new NameResolver);
+        self::$nodeTraverser = new NodeTraverser();
+        self::$nodeTraverser->addVisitor(new NameResolver());
 
-        self::$nodeFinder = new NodeFinder;
+        self::$nodeFinder = new NodeFinder();
 
         self::$docBlockFactory = DocBlockFactory::createInstance();
     }

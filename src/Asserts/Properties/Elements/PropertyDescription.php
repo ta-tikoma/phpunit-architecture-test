@@ -27,7 +27,7 @@ final class PropertyDescription
         ObjectPropertiesDescription $objectPropertiesDescription,
         ReflectionProperty $reflectionProperty
     ): self {
-        $description = new static;
+        $description = new static();
         $description->name = $reflectionProperty->getName();
         $description->type = self::getPropertyType($objectPropertiesDescription, $reflectionProperty);
 

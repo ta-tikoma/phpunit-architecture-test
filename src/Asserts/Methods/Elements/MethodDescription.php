@@ -10,7 +10,6 @@ use phpDocumentor\Reflection\DocBlock\Tags\Return_;
 use PhpParser\Node;
 use PHPUnit\Architecture\Asserts\Methods\ObjectMethodsDescription;
 use PHPUnit\Architecture\Services\ServiceContainer;
-use stdClass;
 
 /**
  * Method description
