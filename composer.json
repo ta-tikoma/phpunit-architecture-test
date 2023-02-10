@@ -37,5 +37,8 @@
         "classmap": [
             "tests/"
         ]
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.9.17"
     }
 }

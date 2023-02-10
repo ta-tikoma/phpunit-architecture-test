@@ -24,6 +24,7 @@ class ObjectDescriptionBase
 
     public static function make(string $path): ?self
     {
+        $ast = null;
         $content = file_get_contents($path);
 
         try {
@@ -62,7 +63,7 @@ class ObjectDescriptionBase
             return null;
         }
 
-        $description = new static();
+        $description = new static(); // @phpstan-ignore-line
 
         if ($object instanceof Node\Stmt\Class_) {
             $description->type = ObjectType::_CLASS();
