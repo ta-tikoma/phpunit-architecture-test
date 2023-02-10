@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PHPUnit\Architecture\Asserts\Dependencies;
 
 use PHPUnit\Architecture\Elements\Layer\Layer;
+use PHPUnit\Architecture\Elements\ObjectDescription;
 
 /**
  * Asserts for objects dependencies
@@ -67,6 +68,7 @@ trait DependenciesAsserts
 
         foreach ($layers as $layer) {
             foreach ($layer as $object) {
+                /** @var ObjectDescription $object */
                 foreach ($object->uses as $use) {
                     foreach ($layersToSearch as $layerToSearch) {
                         // do not test layer with self
