@@ -31,7 +31,24 @@ class ObjectDependenciesDescription extends ObjectDescriptionBase
         }
 
         /** @var Node\Name [] $names */
-        $names = ServiceContainer::$nodeFinder->findInstanceOf($description->stmts, Node\Name::class);
+        $names = ServiceContainer::$nodeFinder->findInstanceOf(
+            $description->stmts,
+            Node\Name::class
+        );
+
+        $names = array_values(array_filter($names, static function (Node\Name $name) {
+            $nameAsString = $name->toString();
+
+            return match (true) {
+                enum_exists($nameAsString) => true,
+                class_exists($nameAsString) => true,
+                interface_exists($nameAsString) => true,
+                function_exists($nameAsString) => true,
+                trait_exists($nameAsString) => true,
+
+                default => false,
+            };
+        }));
 
         $description->uses = new ObjectUses(
             array_map(
