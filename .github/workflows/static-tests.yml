@@ -31,5 +31,8 @@ jobs:
     - name: Install PHP dependencies
       run: composer update --${{ matrix.dependency-version }} --no-interaction --no-progress --ansi
 
-    - name: Static Tests
+    - name: Static Type Tests
       run: ./vendor/bin/phpstan
+
+    - name: Static Lint Tests
+      run: ./vendor/bin/pint --test

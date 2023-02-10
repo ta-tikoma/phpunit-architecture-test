@@ -39,6 +39,7 @@
         ]
     },
     "require-dev": {
-        "phpstan/phpstan": "^1.9.17"
+        "phpstan/phpstan": "^1.9.17",
+        "laravel/pint": "^1.4.1"
     }
 }
