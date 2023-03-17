@@ -43,7 +43,12 @@ final class MethodDescription
 
 
         $docComment = (string) $classMethod->getDocComment();
-        $docBlock = ServiceContainer::$docBlockFactory->create(empty($docComment) ? '/** */' : $docComment);
+
+        try {
+            $docBlock = ServiceContainer::$docBlockFactory->create(empty($docComment) ? '/** */' : $docComment);
+        } catch (\RuntimeException $e) {
+            $docBlock = ServiceContainer::$docBlockFactory->create('/** */');
+        }
 
         $description->name = $classMethod->name->toString();
         $description->args = self::getArgs($objectMethodsDescription, $classMethod, $docBlock);
