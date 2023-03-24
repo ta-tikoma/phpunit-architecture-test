@@ -41,7 +41,8 @@ final class MethodsTest extends TestCase
     /**
      * @param $parameter
      */
-    public function fakeDocBlockWithoutType($parameter){
+    public function fakeDocBlockWithoutType($parameter)
+    {
         //this fake method with a non-typed docblock will trigger an error to reproduce the issue solved by https://github.com/ta-tikoma/phpunit-architecture-test/pull/8
     }
 }

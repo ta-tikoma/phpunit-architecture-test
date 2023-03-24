@@ -22,7 +22,7 @@
     ],
     "require": {
         "php": "^8.1.0",
-        "phpunit/phpunit": "^9.6.5|^10.0.16",
+        "phpunit/phpunit": "^9.6.5|^10.0.18",
         "nikic/php-parser": "^4.15.4",
         "symfony/finder": "^6.2.7",
         "myclabs/php-enum": "^1.8.4",
@@ -39,7 +39,7 @@
         ]
     },
     "require-dev": {
-        "phpstan/phpstan": "^1.10.7",
-        "laravel/pint": "^1.6.0"
+        "phpstan/phpstan": "^1.10.8",
+        "laravel/pint": "^1.7.0"
     }
 }
