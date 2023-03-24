@@ -72,7 +72,7 @@ final class MethodDescription
 
             if ($type === null) {
                 foreach ($tags as $tag) {
-                    if ($tag->getVariableName() === $name) {
+                    if ($tag->getVariableName() === $name && $tag->getType() !== null) {
                         $type = $objectMethodsDescription->getDocBlockTypeWithNamespace($tag->getType());
                         break;
                     }

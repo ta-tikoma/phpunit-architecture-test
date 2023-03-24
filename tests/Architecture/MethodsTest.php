@@ -37,4 +37,11 @@ final class MethodsTest extends TestCase
 
         $this->assertMethodSizeLessThan($filters, 20);
     }
+
+    /**
+     * @param $parameter
+     */
+    public function fakeDocBlockWithoutType($parameter){
+        //
+    }
 }
