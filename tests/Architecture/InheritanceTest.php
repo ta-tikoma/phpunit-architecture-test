@@ -16,7 +16,7 @@ final class InheritanceTest extends TestCase
         $this->assertEach(
             $tests,
             fn (ObjectDescription $objectDescription) => $objectDescription->extendsClass === TestCase::class,
-            fn (string $key, ObjectDescription $objectDescription) => "Test {$objectDescription->name} does not extends TestCase::class"
+            fn (string|int $key, ObjectDescription $objectDescription) => "Test {$objectDescription->name} does not extends TestCase::class"
         );
     }
 }
