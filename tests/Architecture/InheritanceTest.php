@@ -9,7 +9,7 @@ use tests\TestCase;
 
 final class InheritanceTest extends TestCase
 {
-    public function test_layer_essence()
+    public function test_layer_essence(): void
     {
         $tests = $this->layer()->leaveByNameStart('tests\\Architecture');
 

@@ -9,8 +9,14 @@ use PHPUnit\Architecture\Elements\ObjectDescription;
 
 trait LayerSplit
 {
+    /**
+     * @return Layer[]
+     */
     abstract public function split(Closure $closure): array;
 
+    /**
+     * @return Layer[]
+     */
     public function splitByNameRegex(string $name): array
     {
         return $this->split(static function (ObjectDescription $objectDescription) use ($name): ?string {

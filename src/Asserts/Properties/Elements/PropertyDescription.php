@@ -9,6 +9,8 @@ use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 use PHPUnit\Architecture\Asserts\Properties\ObjectPropertiesDescription;
 use PHPUnit\Architecture\Enums\Visibility;
 use PHPUnit\Architecture\Services\ServiceContainer;
+use ReflectionIntersectionType;
+use ReflectionNamedType;
 use ReflectionProperty;
 use ReflectionUnionType;
 
@@ -42,16 +44,25 @@ final class PropertyDescription
         return $description;
     }
 
+    /**
+     * @return string|string[]|null
+     */
     private static function getPropertyType(
         ObjectPropertiesDescription $objectPropertiesDescription,
         ReflectionProperty $reflectionProperty
-    ) {
-        if ($reflectionProperty->getType() !== null) {
-            if ($reflectionProperty->getType() instanceof ReflectionUnionType) {
-                return array_map(fn ($type) => $type->getName(), $reflectionProperty->getType()->getTypes());
+    ): string|array|null {
+        $type = $reflectionProperty->getType();
+        if ($type !== null) {
+            if ($type instanceof ReflectionUnionType) {
+                return array_map(static fn ($type) => $type->getName(), $type->getTypes());
             }
 
-            return $reflectionProperty->getType()->getName();
+            if ($type instanceof ReflectionIntersectionType) {
+                return null; // @todo
+            }
+
+            /** @var ReflectionNamedType $type */
+            return $type->getName();
         }
 
 
@@ -72,7 +83,11 @@ final class PropertyDescription
         /** @var Var_[] $tags */
         $tags = $docBlock->getTagsWithTypeByName('var');
         if ($tag = array_shift($tags)) {
-            return $objectPropertiesDescription->getDocBlockTypeWithNamespace($tag->getType());
+            if (($type = $tag->getType()) === null) {
+                return null;
+            }
+
+            return $objectPropertiesDescription->getDocBlockTypeWithNamespace($type);
         }
 
         return null;

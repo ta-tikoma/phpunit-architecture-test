@@ -68,7 +68,6 @@ trait DependenciesAsserts
 
         foreach ($layers as $layer) {
             foreach ($layer as $object) {
-                /** @var ObjectDescription $object */
                 foreach ($object->uses as $use) {
                     foreach ($layersToSearch as $layerToSearch) {
                         // do not test layer with self

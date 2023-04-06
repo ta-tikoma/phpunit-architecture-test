@@ -11,21 +11,19 @@ use PHPUnit\Architecture\Services\ServiceContainer;
 use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\Types\AggregatedType;
 use phpDocumentor\Reflection\Types\Array_;
+use PHPUnit\Architecture\Elements\ObjectDescription;
 
 /**
  * Describe object dependencies
  */
-class ObjectDependenciesDescription extends ObjectDescriptionBase
+abstract class ObjectDependenciesDescription extends ObjectDescriptionBase
 {
-    /**
-     * Names of uses objects
-     */
     public ObjectUses $uses;
 
     public static function make(string $path): ?self
     {
+        /** @var ObjectDescription|null $description */
         $description = parent::make($path);
-
         if ($description === null) {
             return null;
         }
@@ -66,20 +64,30 @@ class ObjectDependenciesDescription extends ObjectDescriptionBase
         return $description;
     }
 
+    /**
+     * @return string|string[]|null
+     */
     public function getDocBlockTypeWithNamespace(
         Type $type
-    ) {
+    ): string|array|null {
         $result = [];
         if ($type instanceof AggregatedType) {
             foreach ($type as $_type) {
                 /** @var Type $_type */
-                $result[] = $this->getDocBlockTypeWithNamespace($_type);
+                $t = $this->getDocBlockTypeWithNamespace($_type);
+                if ($t !== null) {
+                    $result[] = $t;
+                }
             }
         }
 
         if ($type instanceof Array_) {
-            $result[] = $this->getDocBlockTypeWithNamespace($type->getKeyType());
-            $result[] = $this->getDocBlockTypeWithNamespace($type->getValueType());
+            /**
+             * @todo
+             *
+             * $result[] = $this->getDocBlockTypeWithNamespace($type->getKeyType());
+             * $result[] = $this->getDocBlockTypeWithNamespace($type->getValueType());
+             */
         }
 
         // @todo
@@ -96,6 +104,6 @@ class ObjectDependenciesDescription extends ObjectDescriptionBase
             return $_result;
         }
 
-        return $this->uses->getByName((string) $type) ?? $type;
+        return $this->uses->getByName((string) $type) ?? (string) $type;
     }
 }

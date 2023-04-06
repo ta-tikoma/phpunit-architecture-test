@@ -11,11 +11,13 @@ use MyCLabs\Enum\Enum;
  * @method static static _ENUM()
  * @method static static _TRAIT()
  * @method static static _INTERFACE()
+ *
+ * @extends Enum<string>
  */
 final class ObjectType extends Enum
 {
-    private const _CLASS     = 'class';
-    private const _ENUM      = 'enum';
-    private const _TRAIT     = 'trait';
-    private const _INTERFACE = 'interface';
+    private const _CLASS     = 'class'; // @phpstan-ignore-line
+    private const _ENUM      = 'enum'; // @phpstan-ignore-line
+    private const _TRAIT     = 'trait'; // @phpstan-ignore-line
+    private const _INTERFACE = 'interface'; // @phpstan-ignore-line
 }

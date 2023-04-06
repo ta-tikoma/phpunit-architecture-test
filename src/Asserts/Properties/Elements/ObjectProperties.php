@@ -6,7 +6,11 @@ namespace PHPUnit\Architecture\Asserts\Properties\Elements;
 
 use ArrayIterator;
 use IteratorAggregate;
+use Traversable;
 
+/**
+ * @implements IteratorAggregate<PropertyDescription>
+ */
 final class ObjectProperties implements IteratorAggregate
 {
     /**
@@ -25,7 +29,7 @@ final class ObjectProperties implements IteratorAggregate
     }
 
     #[\ReturnTypeWillChange]
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->properties);
     }
