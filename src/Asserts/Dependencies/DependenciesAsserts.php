@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PHPUnit\Architecture\Asserts\Dependencies;
 
 use PHPUnit\Architecture\Elements\Layer\Layer;
-use PHPUnit\Architecture\Elements\ObjectDescription;
 
 /**
  * Asserts for objects dependencies
