@@ -10,7 +10,7 @@ use PHPUnit\Architecture\Enums\ObjectType;
 use PHPUnit\Architecture\Services\ServiceContainer;
 use ReflectionClass;
 
-class ObjectDescriptionBase
+abstract class ObjectDescriptionBase
 {
     public ObjectType $type;
 
@@ -85,8 +85,7 @@ class ObjectDescriptionBase
         }
 
         /** @var class-string $className */
-        $className = $object->namespacedName->toString();
-        ;
+        $className = $object->namespacedName->toString();;
 
         $description->path            = $path;
         $description->name            = $className;

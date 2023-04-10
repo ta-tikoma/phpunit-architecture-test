@@ -6,6 +6,6 @@ namespace PHPUnit\Architecture\Elements;
 
 use PHPUnit\Architecture\Asserts\Properties\ObjectPropertiesDescription;
 
-final class ObjectDescription extends ObjectPropertiesDescription
+class ObjectDescription extends ObjectPropertiesDescription
 {
 }
