@@ -22,15 +22,15 @@
     ],
     "require": {
         "php": "^8.1.0",
-        "phpunit/phpunit": "^9.6.5|^10.0.18",
+        "phpunit/phpunit": "^9.6.6|^10.0.19",
         "nikic/php-parser": "^4.15.4",
         "symfony/finder": "^6.2.7",
         "myclabs/php-enum": "^1.8.4",
         "phpdocumentor/reflection-docblock": "^5.3.0"
     },
     "require-dev": {
-        "phpstan/phpstan": "^1.10",
-        "laravel/pint": "^1.7.0"
+        "phpstan/phpstan": "^1.10.11",
+        "laravel/pint": "^1.8.0"
     },
     "autoload": {
         "psr-4": {
