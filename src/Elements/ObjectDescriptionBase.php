@@ -85,7 +85,7 @@ abstract class ObjectDescriptionBase
         }
 
         /** @var class-string $className */
-        $className = $object->namespacedName->toString();;
+        $className = $object->namespacedName->toString();
 
         $description->path            = $path;
         $description->name            = $className;
