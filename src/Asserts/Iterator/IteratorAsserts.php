@@ -4,19 +4,17 @@ declare(strict_types=1);
 
 namespace PHPUnit\Architecture\Asserts\Iterator;
 
-use Closure;
-use IteratorAggregate;
-
 trait IteratorAsserts
 {
     abstract public static function assertTrue($condition, string $message = ''): void;
 
     /**
-     * @property array|IteratorAggregate $list
-     * @property Closure $check static function(item_of_list $item): bool
-     * @property Closure $message static function(string $key, item_of_list $item): string
+     * @template TItemValue
+     * @param iterable<string|int, TItemValue>|array<string|int, TItemValue> $list
+     * @param callable(TItemValue $item): bool $check
+     * @param callable(string|int $key, TItemValue $item): string $message
      */
-    public function assertEach($list, Closure $check, Closure $message): void
+    public function assertEach($list, callable $check, callable $message): void
     {
         foreach ($list as $key => $item) {
             if (!$check($item)) {
@@ -28,11 +26,12 @@ trait IteratorAsserts
     }
 
     /**
-     * @property array|IteratorAggregate $list
-     * @property Closure $check static function(item_of_list $item): bool
-     * @property Closure $message static function(string $key, item_of_list $item): string
+     * @template TItemValue
+     * @param iterable<string|int, TItemValue>|array<string|int, TItemValue> $list
+     * @param callable(TItemValue $item): bool $check
+     * @param callable(string|int $key, TItemValue $item): string $message
      */
-    public function assertNotOne($list, Closure $check, Closure $message): void
+    public function assertNotOne($list, callable $check, callable $message): void
     {
         foreach ($list as $key => $item) {
             if ($check($item)) {
@@ -44,10 +43,11 @@ trait IteratorAsserts
     }
 
     /**
-     * @property array|IteratorAggregate $list
-     * @property Closure $check static function(item_of_list $item): bool
+     * @template TItemValue
+     * @param iterable<string|int, TItemValue>|array<string|int, TItemValue> $list
+     * @param callable(TItemValue $item): bool $check
      */
-    public function assertAny($list, Closure $check, string $message): void
+    public function assertAny($list, callable $check, string $message): void
     {
         $isTrue = false;
         foreach ($list as $item) {

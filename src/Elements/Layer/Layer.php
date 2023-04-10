@@ -8,7 +8,11 @@ use ArrayIterator;
 use Closure;
 use IteratorAggregate;
 use PHPUnit\Architecture\Elements\ObjectDescription;
+use Traversable;
 
+/**
+ * @implements IteratorAggregate<int, ObjectDescription>
+ */
 final class Layer implements IteratorAggregate
 {
     use LayerLeave;
@@ -16,11 +20,15 @@ final class Layer implements IteratorAggregate
     use LayerSplit;
 
     protected ?string $name = null;
+
     /**
      * @var ObjectDescription[]
      */
     protected array $objects = [];
 
+    /**
+     * @param ObjectDescription[] $objects
+     */
     public function __construct(
         array $objects
     ) {
@@ -28,7 +36,7 @@ final class Layer implements IteratorAggregate
     }
 
     #[\ReturnTypeWillChange]
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->objects);
     }
@@ -102,6 +110,9 @@ final class Layer implements IteratorAggregate
         }, $objects);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function essence(string $path): array
     {
         return $this->essenceRecursion(
@@ -111,7 +122,13 @@ final class Layer implements IteratorAggregate
         );
     }
 
-    private function essenceRecursion(string $path, array $parts, $list)
+    /**
+     * @param string[] $parts
+     * @param array<string, mixed> $list
+     *
+     * @return array<string, mixed>
+     */
+    private function essenceRecursion(string $path, array $parts, $list): array
     {
         $part = array_shift($parts);
         if ($part === null) {
@@ -122,14 +139,15 @@ final class Layer implements IteratorAggregate
 
         if ($part === '*') {
             foreach ($list as $key => $item) {
+                /** @var array<string, mixed> $item */
                 $result = array_merge($result, $this->essenceRecursion("$path.$key", $parts, $item));
             }
 
             return $result;
         }
 
-        foreach ($list as $item) {
-            $result["$path.$item"] = $item->$part;
+        foreach ($list as $key => $item) {
+            $result["$path.$key"] = $item->$part;
         }
 
         return $this->essenceRecursion($path, $parts, $result);

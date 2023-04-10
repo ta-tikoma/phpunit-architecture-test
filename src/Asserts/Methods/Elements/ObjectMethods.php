@@ -6,7 +6,11 @@ namespace PHPUnit\Architecture\Asserts\Methods\Elements;
 
 use ArrayIterator;
 use IteratorAggregate;
+use Traversable;
 
+/**
+ * @implements IteratorAggregate<MethodDescription>
+ */
 final class ObjectMethods implements IteratorAggregate
 {
     /**
@@ -17,7 +21,7 @@ final class ObjectMethods implements IteratorAggregate
     protected array $methods;
 
     /**
-     * @param MethodsDescription[] $methods
+     * @param MethodDescription[] $methods
      */
     public function __construct(array $methods)
     {
@@ -25,7 +29,7 @@ final class ObjectMethods implements IteratorAggregate
     }
 
     #[\ReturnTypeWillChange]
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->methods);
     }

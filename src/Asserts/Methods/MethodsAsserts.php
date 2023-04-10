@@ -187,7 +187,7 @@ trait MethodsAsserts
      *
      * @param Layer|Layer[] $layerA
      */
-    public function assertMethodSizeLessThan($layerA, $size): void
+    public function assertMethodSizeLessThan($layerA, int $size): void
     {
         /** @var Layer[] $layers */
         $layers = is_array($layerA) ? $layerA : [$layerA];

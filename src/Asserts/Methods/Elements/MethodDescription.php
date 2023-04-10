@@ -8,8 +8,10 @@ use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlock\Tags\Param;
 use phpDocumentor\Reflection\DocBlock\Tags\Return_;
 use PhpParser\Node;
+use PhpParser\Node\Expr;
 use PHPUnit\Architecture\Asserts\Methods\ObjectMethodsDescription;
 use PHPUnit\Architecture\Services\ServiceContainer;
+use RuntimeException;
 
 /**
  * Method description
@@ -21,14 +23,14 @@ final class MethodDescription
     /**
      * Names and types function arguments
      *
-     * @var array[]
+     * @var array<array{string|string[]|null, string|null}>
      */
     public array $args;
 
     /**
      * Return type
      *
-     * @var string|array|null
+     * @var string|string[]|null
      */
     public $return;
 
@@ -41,12 +43,11 @@ final class MethodDescription
     {
         $description = new static();
 
-
         $docComment = (string) $classMethod->getDocComment();
 
         try {
             $docBlock = ServiceContainer::$docBlockFactory->create(empty($docComment) ? '/** */' : $docComment);
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException) {
             $docBlock = ServiceContainer::$docBlockFactory->create('/** */');
         }
 
@@ -58,6 +59,9 @@ final class MethodDescription
         return $description;
     }
 
+    /**
+     * @return array<array{string|string[]|null, string|null}>
+     */
     private static function getArgs(
         ObjectMethodsDescription $objectMethodsDescription,
         Node\Stmt\ClassMethod $classMethod,
@@ -67,7 +71,7 @@ final class MethodDescription
         $tags = $docBlock->getTagsWithTypeByName('param');
 
         return array_map(static function (Node\Param $param) use ($tags, $objectMethodsDescription): array {
-            $name = $param->var === null ? null : $param->var->name;
+            $name = self::getVarName($param->var);
             $type = self::tryToString($param->type);
 
             if ($type === null) {
@@ -83,7 +87,21 @@ final class MethodDescription
         }, $classMethod->params);
     }
 
-    private static function tryToString($object)
+    private static function getVarName(Expr\Variable|Expr\Error $var): ?string
+    {
+        if ($var instanceof Expr\Variable) {
+            $name = $var->name;
+            if ($name instanceof Expr) {
+                return null;
+            }
+
+            return $name;
+        }
+
+        return null;
+    }
+
+    private static function tryToString(?object $object): ?string
     {
         if ($object !== null) {
             if (method_exists($object, 'toString')) {
@@ -94,11 +112,14 @@ final class MethodDescription
         return null;
     }
 
+    /**
+     * @return string|string[]|null
+     */
     private static function getReturnType(
         ObjectMethodsDescription $objectMethodsDescription,
         Node\Stmt\ClassMethod $classMethod,
         DocBlock $docBlock
-    ) {
+    ): string|array|null {
         $type = self::tryToString($classMethod->returnType);
         if ($type !== null) {
             return $type;
@@ -107,7 +128,12 @@ final class MethodDescription
         /** @var Return_[] $tags */
         $tags = $docBlock->getTagsWithTypeByName('return');
         if ($tag = array_shift($tags)) {
-            return $objectMethodsDescription->getDocBlockTypeWithNamespace($tag->getType());
+            $type = $tag->getType();
+            if ($type === null) {
+                return null;
+            }
+
+            return $objectMethodsDescription->getDocBlockTypeWithNamespace($type);
         }
 
         return null;

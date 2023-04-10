@@ -6,7 +6,11 @@ namespace PHPUnit\Architecture\Asserts\Dependencies\Elements;
 
 use ArrayIterator;
 use IteratorAggregate;
+use Traversable;
 
+/**
+ * @implements IteratorAggregate<string>
+ */
 final class ObjectUses implements IteratorAggregate
 {
     /**
@@ -25,7 +29,7 @@ final class ObjectUses implements IteratorAggregate
     }
 
     #[\ReturnTypeWillChange]
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->uses);
     }

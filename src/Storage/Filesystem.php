@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PHPUnit\Architecture\Storage;
 
+use Generator;
 use PHPUnit\Architecture\Services\ServiceContainer;
 use SplFileInfo;
 
@@ -20,7 +21,10 @@ final class Filesystem
         return $dir . '../../../';
     }
 
-    public static function files()
+    /**
+     * @return Generator<string>
+     */
+    public static function files(): Generator
     {
         /** @var SplFileInfo[] $paths */
         $paths = ServiceContainer::$finder;

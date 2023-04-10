@@ -9,7 +9,7 @@ use tests\TestCase;
 
 final class EssenceTest extends TestCase
 {
-    public function test_layer_essence()
+    public function test_layer_essence(): void
     {
         $objectParts = $this->layer()
             ->leaveByNameStart('PHPUnit\\Architecture\\Asserts\\')
@@ -21,7 +21,7 @@ final class EssenceTest extends TestCase
         $this->assertNotOne(
             $visibilities,
             fn (Visibility $visibility) => $visibility->equals(Visibility::PRIVATE()),
-            fn (string $key, Visibility $visibility) => "Property $key : {$visibility->getValue()} is not private"
+            fn (string|int $key, Visibility $visibility) => "Property $key : {$visibility->getValue()} is not private"
         );
     }
 }
