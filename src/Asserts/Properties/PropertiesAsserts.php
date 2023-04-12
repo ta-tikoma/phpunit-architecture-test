@@ -28,7 +28,7 @@ trait PropertiesAsserts
         foreach ($layers as $layer) {
             foreach ($layer as $object) {
                 foreach ($object->properties as $property) {
-                    if ($property->visibility->equals(Visibility::PUBLIC())) {
+                    if ($property->visibility === Visibility::PUBLIC) {
                         $result[] = "$object->name : {$property->name} <- public";
                     }
                 }

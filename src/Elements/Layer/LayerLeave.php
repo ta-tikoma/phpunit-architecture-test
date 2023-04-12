@@ -47,7 +47,7 @@ trait LayerLeave
     public function leaveByType(ObjectType $type): Layer
     {
         return $this->leave(static function (ObjectDescription $objectDescription) use ($type): bool {
-            return $objectDescription->type->equals($type);
+            return $objectDescription->type === $type;
         });
     }
 }
