@@ -75,13 +75,13 @@ abstract class ObjectDescriptionBase
         $description = new static(); // @phpstan-ignore-line
 
         if ($object instanceof Node\Stmt\Class_) {
-            $description->type = ObjectType::_CLASS();
+            $description->type = ObjectType::_CLASS;
         } elseif ($object instanceof Node\Stmt\Trait_) {
-            $description->type = ObjectType::_TRAIT();
+            $description->type = ObjectType::_TRAIT;
         } elseif ($object instanceof Node\Stmt\Interface_) {
-            $description->type = ObjectType::_INTERFACE();
+            $description->type = ObjectType::_INTERFACE;
         } elseif ($object instanceof Node\Stmt\Enum_) {
-            $description->type = ObjectType::_ENUM();
+            $description->type = ObjectType::_ENUM;
         }
 
         /** @var class-string $className */

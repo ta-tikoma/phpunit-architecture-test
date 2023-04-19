@@ -20,8 +20,8 @@ final class EssenceTest extends TestCase
 
         $this->assertNotOne(
             $visibilities,
-            fn (Visibility $visibility) => $visibility->equals(Visibility::PRIVATE()),
-            fn (string|int $key, Visibility $visibility) => "Property $key : {$visibility->getValue()} is not private"
+            fn (Visibility $visibility) => $visibility === Visibility::PRIVATE,
+            fn (string|int $key, Visibility $visibility) => "Property $key : {$visibility->value} is not private"
         );
     }
 }

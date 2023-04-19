@@ -34,11 +34,11 @@ final class PropertyDescription
         $description->type = self::getPropertyType($objectPropertiesDescription, $reflectionProperty);
 
         if ($reflectionProperty->isPrivate()) {
-            $description->visibility = Visibility::PRIVATE();
+            $description->visibility = Visibility::PRIVATE;
         } elseif ($reflectionProperty->isProtected()) {
-            $description->visibility = Visibility::PROTECTED();
+            $description->visibility = Visibility::PROTECTED;
         } else {
-            $description->visibility = Visibility::PUBLIC();
+            $description->visibility = Visibility::PUBLIC;
         }
 
         return $description;

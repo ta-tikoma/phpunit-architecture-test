@@ -22,11 +22,11 @@ final class MethodsTest extends TestCase
     {
         $assertMethods = $this->layer()
             ->leaveByNameStart('PHPUnit\\Architecture\\Asserts')
-            ->leaveByType(ObjectType::_TRAIT());
+            ->leaveByType(ObjectType::_TRAIT);
 
         $layerClass = $this->layer()
             ->leaveByNameStart(Layer::class)
-            ->leaveByType(ObjectType::_CLASS());
+            ->leaveByType(ObjectType::_CLASS);
 
         $this->assertIncomingsFrom($assertMethods, $layerClass);
     }

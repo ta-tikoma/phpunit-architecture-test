@@ -60,7 +60,7 @@ final class LayerTest extends TestCase
 
         $traitsCheck = $this->layer()
             ->leaveByNameStart('PHPUnit\\Architecture\\Asserts')
-            ->leaveByType(ObjectType::_TRAIT());
+            ->leaveByType(ObjectType::_TRAIT);
 
         $this->assertTrue($traits->equals($traitsCheck));
     }

@@ -47,7 +47,7 @@ trait LayerExclude
     public function excludeByType(ObjectType $type): Layer
     {
         return $this->exclude(static function (ObjectDescription $objectDescription) use ($type): bool {
-            return $objectDescription->type->equals($type);
+            return $objectDescription->type === $type;
         });
     }
 }
