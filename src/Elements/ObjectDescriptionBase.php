@@ -72,6 +72,12 @@ abstract class ObjectDescriptionBase
             return null;
         }
 
+        /** @var class-string $className */
+        $className = $object->namespacedName->toString();
+        if (!class_exists($className)) {
+            return null;
+        }
+
         $description = new static(); // @phpstan-ignore-line
 
         if ($object instanceof Node\Stmt\Class_) {
@@ -83,9 +89,6 @@ abstract class ObjectDescriptionBase
         } elseif ($object instanceof Node\Stmt\Enum_) {
             $description->type = ObjectType::_ENUM;
         }
-
-        /** @var class-string $className */
-        $className = $object->namespacedName->toString();
 
         $description->path            = $path;
         $description->name            = $className;
