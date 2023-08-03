@@ -9,6 +9,7 @@ use PhpParser\Node;
 use PHPUnit\Architecture\Enums\ObjectType;
 use PHPUnit\Architecture\Services\ServiceContainer;
 use ReflectionClass;
+use ReflectionException;
 
 abstract class ObjectDescriptionBase
 {
@@ -93,7 +94,7 @@ abstract class ObjectDescriptionBase
 
         try {
             $description->reflectionClass = new ReflectionClass($description->name);
-        } catch (Exception) {
+        } catch (ReflectionException) { // @phpstan-ignore-line when class by className not loaded
             return null;
         }
 
