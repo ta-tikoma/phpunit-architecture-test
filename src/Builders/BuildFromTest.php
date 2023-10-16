@@ -15,11 +15,22 @@ trait BuildFromTest
     public function layer(): Layer
     {
         if (self::$layer === null) {
-            ServiceContainer::init();
+            ServiceContainer::init($this->excludedPaths());
 
             self::$layer = new Layer(ObjectsStorage::getObjectMap());
         }
 
         return self::$layer;
+    }
+
+    private function excludedPaths(): array
+    {
+        $defaultExcludedPaths = [
+            'vendor',
+        ];
+
+        return property_exists($this, 'excludedPaths') && is_array($this->excludedPaths)
+            ? array_merge($defaultExcludedPaths, $this->excludedPaths)
+            : $defaultExcludedPaths;
     }
 }
