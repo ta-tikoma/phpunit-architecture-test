@@ -38,10 +38,10 @@ abstract class ObjectDependenciesDescription extends ObjectDescriptionBase
             $nameAsString = $name->toString();
 
             return match (true) {
+                function_exists($nameAsString) => true,
                 enum_exists($nameAsString) => true,
                 class_exists($nameAsString) => true,
                 interface_exists($nameAsString) => true,
-                function_exists($nameAsString) => true,
                 trait_exists($nameAsString) => true,
 
                 default => false,
