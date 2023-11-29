@@ -1,0 +1,14 @@
+* text=auto
+
+# Path-based git attributes
+# https://git-scm.com/docs/gitattributes
+
+# Ignore all test and documentation with "export-ignore".
+/.gitattributes     export-ignore
+/.github            export-ignore
+/.gitignore         export-ignore
+/docs               export-ignore
+/phpstan.neon       export-ignore
+/phpunit.xml        export-ignore
+/pint.json          export-ignore
+/tests              export-ignore
