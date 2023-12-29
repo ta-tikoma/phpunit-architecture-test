@@ -33,6 +33,9 @@ final class ServiceContainer
 
     public static bool $showException = false;
 
+    /**
+     * @param string[] $excludedPaths
+     */
     public static function init(array $excludedPaths = []): void
     {
         self::$finder = Finder::create()

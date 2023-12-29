@@ -42,5 +42,10 @@
         "classmap": [
             "tests/"
         ]
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "stan": "vendor/bin/phpstan",
+        "pint": "vendor/bin/pint"
     }
 }
