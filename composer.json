@@ -42,5 +42,16 @@
         "classmap": [
             "tests/"
         ]
+    },
+    "scripts": {
+        "lint": "pint",
+        "test:lint": "pint --test",
+        "test:type": "phpstan analyse --ansi --memory-limit=-1",
+        "test:unit": "php bin/phpunit --colors=always",
+        "test": [
+            "@test:lint",
+            "@test:type",
+            "@test:unit",
+        ]
     }
 }

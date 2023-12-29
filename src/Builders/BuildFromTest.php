@@ -23,6 +23,9 @@ trait BuildFromTest
         return self::$layer;
     }
 
+    /**
+     * @return string[]
+     */
     private function excludedPaths(): array
     {
         $defaultExcludedPaths = [
