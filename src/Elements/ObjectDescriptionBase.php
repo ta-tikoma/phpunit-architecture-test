@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PHPUnit\Architecture\Elements;
 
 use Exception;
+use Error;
 use PhpParser\Node;
 use PHPUnit\Architecture\Enums\ObjectType;
 use PHPUnit\Architecture\Services\ServiceContainer;
@@ -108,7 +109,7 @@ abstract class ObjectDescriptionBase
 
         try {
             $description->reflectionClass = new ReflectionClass($description->name);
-        } catch (ReflectionException) { // @phpstan-ignore-line when class by className not loaded
+        } catch (Error|ReflectionException) { // @phpstan-ignore-line when class by className not loaded
             return null;
         }
 
