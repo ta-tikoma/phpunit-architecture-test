@@ -8,6 +8,7 @@ jobs:
     strategy:
       matrix:
         php: ['8.1', '8.2', '8.3']
+        phpunit: [10, 11]
         dependency-version: [prefer-lowest, prefer-stable]
 
     name: PHP ${{ matrix.php }} - ${{ matrix.dependency-version }}
@@ -29,7 +30,7 @@ jobs:
         echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
     - name: Install PHP dependencies
-      run: composer update --${{ matrix.dependency-version }} --no-interaction --no-progress --ansi
+      run: composer update --${{ matrix.dependency-version }} --with="phpunit/phpunit:^${{ matrix.phpunit }}" --no-interaction --no-progress --ansi
 
     - name: Unit Tests
       run: ./vendor/bin/phpunit

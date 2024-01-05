@@ -22,13 +22,13 @@
     ],
     "require": {
         "php": "^8.1.0",
-        "phpunit/phpunit": "^10.5.5",
-        "nikic/php-parser": "^4.18.0",
+        "phpunit/phpunit": "^10.5.5  || ^11.0.0",
+        "nikic/php-parser": "^4.18.0 || ^5.0.0",
         "symfony/finder": "^6.4.0 || ^7.0.0",
         "phpdocumentor/reflection-docblock": "^5.3.0"
     },
     "require-dev": {
-        "phpstan/phpstan": "^1.10.50",
+        "phpstan/phpstan": "^1.10.52",
         "laravel/pint": "^1.13.7"
     },
     "minimum-stability": "dev",
