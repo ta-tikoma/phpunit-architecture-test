@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PHPUnit\Architecture\Asserts\Dependencies;
 
+use Throwable;
 use PhpParser\Node;
 use PHPUnit\Architecture\Asserts\Dependencies\Elements\ObjectUses;
 use PHPUnit\Architecture\Elements\ObjectDescriptionBase;
@@ -37,15 +38,19 @@ abstract class ObjectDependenciesDescription extends ObjectDescriptionBase
         $names = array_values(array_filter($names, static function (Node\Name $name) {
             $nameAsString = $name->toString();
 
-            return match (true) {
-                function_exists($nameAsString) => true,
-                enum_exists($nameAsString) => true,
-                class_exists($nameAsString) => true,
-                interface_exists($nameAsString) => true,
-                trait_exists($nameAsString) => true,
+            try {
+                return match (true) {
+                    function_exists($nameAsString) => true,
+                    enum_exists($nameAsString) => true,
+                    class_exists($nameAsString) => true,
+                    interface_exists($nameAsString) => true,
+                    trait_exists($nameAsString) => true,
 
-                default => false,
-            };
+                    default => false,
+                };
+            } catch (Throwable) {
+                return false;
+            }
         }));
 
         $description->uses = new ObjectUses(
