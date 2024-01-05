@@ -48,7 +48,7 @@ final class ServiceContainer
             self::$finder->exclude($path);
         }
 
-        self::$parser = (new ParserFactory())->createForHostVersion();
+        self::$parser = (new ParserFactory())->createForNewestSupportedVersion();
 
         self::$nodeTraverser = new NodeTraverser();
         self::$nodeTraverser->addVisitor(new NameResolver());
