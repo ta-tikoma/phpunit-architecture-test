@@ -21,6 +21,11 @@ abstract class ObjectDependenciesDescription extends ObjectDescriptionBase
 {
     public ObjectUses $uses;
 
+    public function __construct()
+    {
+        $this->uses = new ObjectUses([]);
+    }
+
     public static function make(string $path): ?self
     {
         /** @var ObjectDescription|null $description */
