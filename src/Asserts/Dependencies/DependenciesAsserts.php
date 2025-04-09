@@ -75,7 +75,7 @@ trait DependenciesAsserts
                         }
 
                         foreach ($layerToSearch as $objectToSearch) {
-                            if ($objectToSearch->name === $use) {
+                            if (strcasecmp($objectToSearch->name, $use) === 0) {
                                 $result[] = "$object->name <- $objectToSearch->name";
                             }
                         }
