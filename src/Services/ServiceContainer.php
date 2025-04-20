@@ -55,6 +55,7 @@ final class ServiceContainer
 
         self::$nodeFinder = new NodeFinder();
 
+        /** @phpstan-ignore-next-line */
         self::$docBlockFactory = DocBlockFactory::createInstance();
     }
 }

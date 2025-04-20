@@ -16,6 +16,8 @@ abstract class ObjectDescriptionBase
 {
     /**
      * The list of namespaces to ignore.
+     *
+     * @var array<int, string>
      */
     private static iterable $ignore = [
         'Symfony\Component\Console\Tester',
